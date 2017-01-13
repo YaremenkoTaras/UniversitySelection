@@ -17,11 +17,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-<a href="Controller?command=findtickets">
-    <div class="logo"></div>
-</a>
-
 <div class="container">
 
     <div class="card"></div>

@@ -3,7 +3,7 @@ package com.epam.autum.selection.servlet;
 
 import com.epam.autum.selection.command.CommandEmpty;
 import com.epam.autum.selection.command.ICommand;
-import com.epam.autum.selection.command.LoginCommand;
+import com.epam.autum.selection.command.CommandLogin;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class ControllerHelper {
     HashMap<String, ICommand> commands = new HashMap<>();
 
     private ControllerHelper() {
-        commands.put("login", new LoginCommand());
+        commands.put("login", new CommandLogin());
         commands.put("signin", new CommandEmpty());
     }
 
