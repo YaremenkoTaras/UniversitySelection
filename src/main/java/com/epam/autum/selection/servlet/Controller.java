@@ -2,6 +2,8 @@ package com.epam.autum.selection.servlet;
 
 
 import com.epam.autum.selection.command.ICommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +19,7 @@ import java.io.IOException;
 @WebServlet(name = "Controller", urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 
-    //private static Logger log = LogManager.getLogger("Controller.class");
+    private static Logger log = LogManager.getLogger("Controller.class");
     private ControllerHelper controllerHelper = ControllerHelper.getInstance();
 
     public Controller() {
@@ -38,13 +40,12 @@ public class Controller extends HttpServlet {
         try {
             ICommand command = controllerHelper.getCommand(request);
             page = command.execute(request, response);
-
         } catch (ServletException e) {
             System.err.println(e.getMessage());
-           // log.error(e.getMessage());
+            log.error(e.getMessage());
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            //log.error(e.getMessage());
+            log.error(e.getMessage());
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);

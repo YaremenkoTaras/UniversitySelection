@@ -1,7 +1,7 @@
 package com.epam.autum.selection.dao.daofactory;
 
+import com.epam.autum.selection.dao.implementation.mysql.*;
 import com.epam.autum.selection.dao.interfaces.*;
-import com.epam.autum.selection.dao.mysql.*;
 import com.epam.autum.selection.database.WrapperConnection;
 
 /**

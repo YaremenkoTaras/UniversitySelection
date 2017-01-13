@@ -11,8 +11,11 @@
 <c:if test="${user == null}">
     <jsp:forward page="/login"></jsp:forward>
 </c:if>
-<c:if test="${user != null}">
-    <jsp:forward page="/main"></jsp:forward>
+<c:if test="${role == 1  }">
+    <jsp:forward page="/admin"></jsp:forward>
+</c:if>
+<c:if test="${role == 2  }">
+    <jsp:forward page="/applicant"></jsp:forward>
 </c:if>
 
 </body>

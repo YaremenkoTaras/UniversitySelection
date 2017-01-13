@@ -4,6 +4,7 @@ INSERT INTO faculty (name, number_of_student, short_name) VALUES ('Aerospace sys
 INSERT INTO faculty (name, number_of_student, short_name) VALUES ('Information technology Faculty',20,'ITF');
 INSERT INTO faculty (name, number_of_student, short_name) VALUES ('Applied System Analysis',20,'ASA');
 INSERT INTO user (name,sex,birth,phone,address,email,password,user_role_id) VALUES ('Yarema','M','1992-12-12','5678','Kyiv','yaremenko.taras@gmail.com',1111,1);
+INSERT INTO user (name,sex,birth,phone,address,email,password,user_role_id) VALUES ('Yarema','M','1992-12-12','5678','Kyiv','yaremenko.taras@gmail.ru',1111,2);
 INSERT INTO user (name,sex,birth,phone,address,email,password,user_role_id) VALUES ('Zdolbunovskiy Vitaliy','M','1997-12-12','5678','Kyiv','aaaa@qqq',1111,2);
 INSERT INTO user (name,sex,birth,phone,address,email,password,user_role_id) VALUES ('Opanasenko Evgeniy','M','1996-4-4','5678','Kyiv','bbbb@qqq',1111,2);
 INSERT INTO user (name,sex,birth,phone,address,email,password,user_role_id) VALUES ('Teslya Yaroslav','M','1996-6-17','5678','Lviv','cccc@qqq',1111,2);

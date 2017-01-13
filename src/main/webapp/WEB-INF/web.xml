@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
   <servlet>
     <servlet-name>Controller</servlet-name>
     <servlet-class>com.epam.autum.selection.servlet.Controller</servlet-class>
@@ -12,16 +13,78 @@
     <url-pattern>/Controller</url-pattern>
   </servlet-mapping>
 
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
 
-    <welcome-file-list>
-        <welcome-file>WEB-INF\jsp\index.jsp</welcome-file>
-    </welcome-file-list>
 
+
+
+    <servlet>
+        <servlet-name>applicant</servlet-name>
+        <jsp-file>/WEB-INF/jsp/applicant.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>applicant</servlet-name>
+        <url-pattern>/applicant</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>changeAdministratorInformation</servlet-name>
+        <jsp-file>/WEB-INF/jsp/changeAdministratorInformation.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>changeAdministratorInformation</servlet-name>
+        <url-pattern>/changeAdministratorInformation</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>changeApplicantInformation</servlet-name>
+        <jsp-file>/WEB-INF/jsp/changeApplicantInformation.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>changeApplicantInformation</servlet-name>
+        <url-pattern>/changeApplicantInformation</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>changeStudentInformation</servlet-name>
+        <jsp-file>/WEB-INF/jsp/changeStudentInformation.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>changeStudentInformation</servlet-name>
+        <url-pattern>/changeStudentInformation</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <jsp-file>/WEB-INF/jsp/error.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error</location>
+    </error-page>
+    <servlet>
+        <servlet-name>faculty</servlet-name>
+        <jsp-file>/WEB-INF/jsp/faculty.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>faculty</servlet-name>
+        <url-pattern>/faculty</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>login</servlet-name>
         <jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
@@ -31,13 +94,51 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>main</servlet-name>
-        <jsp-file>/WEB-INF/jsp/main.jsp</jsp-file>
+        <servlet-name>registration</servlet-name>
+        <jsp-file>/WEB-INF/jsp/registration.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>main</servlet-name>
-        <url-pattern>/main</url-pattern>
+        <servlet-name>registration</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>student</servlet-name>
+        <jsp-file>/WEB-INF/jsp/student.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>student</servlet-name>
+        <url-pattern>/student</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>newAdministrator</servlet-name>
+        <jsp-file>/WEB-INF/jsp/newAdministrator.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>newAdministrator</servlet-name>
+        <url-pattern>/newAdmin</url-pattern>
     </servlet-mapping>
 
 
+    <filter>
+        <filter-name>LocalizationFilter</filter-name>
+        <filter-class>com.epam.autum.selection.filter.LocalizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocalizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+
+
+    <welcome-file-list>
+        <welcome-file>WEB-INF\jsp\index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
 </web-app>

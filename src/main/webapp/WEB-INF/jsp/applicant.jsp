@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Main</title>
+    <title>Applicant main page</title>
 </head>
 <body>
-Hello from main page
+Hello from applicant main page
 </body>
 </html>

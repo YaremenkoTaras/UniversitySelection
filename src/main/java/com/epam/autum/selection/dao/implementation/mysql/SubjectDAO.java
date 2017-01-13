@@ -1,4 +1,4 @@
-package com.epam.autum.selection.dao.mysql;
+package com.epam.autum.selection.dao.implementation.mysql;
 
 import com.epam.autum.selection.dao.interfaces.ISubjectDAO;
 import com.epam.autum.selection.database.WrapperConnection;
