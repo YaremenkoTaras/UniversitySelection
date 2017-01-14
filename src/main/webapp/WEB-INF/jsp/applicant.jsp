@@ -12,44 +12,56 @@
     <title>${content.getString("applicant.applicant")} : ${user.name}</title>
 </head>
 <body>
-    <form>
-        <h4>${content.getString("applicant.account")}: ${user.name}</h4>
-        <br>
-        ${content.getString("applicant.marks")}
-        <table border="1" cellspacing="0" cellpadding="2">
-            <tr>
-                <td>Subject</td>
-                <td>Mark</td>
-            </tr>
+<form>
+    <h4>${content.getString("applicant.account")}: ${user.name}</h4>
+    <br>
+    ${content.getString("applicant.marks")}
+    <table border="1" cellspacing="0" cellpadding="2">
+        <tr>
+            <td>Subject</td>
+            <td>Mark</td>
+        </tr>
 
-            <c:forEach  var="value" items="${marks}">
-                <tr>
-                    <td>${value.subjectID}</td>
-                    <td>${value.mark}</td>
-                </tr>
-            </c:forEach>
-        </table>
-        <br>
-        <h4>${content.getString("applicant.applications_list")}</h4>
-        <table border="1" cellspacing="0" cellpadding="2">
+        <c:forEach var="value" items="${marks}">
             <tr>
-                <td>${content.getString("applicant.faculty")}</td>
-                <td>${content.getString("applicant.overall")}</td>
-                <td>${content.getString("applicant.date")}</td>
-                <td>${content.getString("applicant.status")}</td>
-                <td>${content.getString("applicant.description")}</td>
+                <td>${value.subjectID}</td>
+                <td>${value.mark}</td>
             </tr>
-            <c:forEach  var="app" items="${applications}">
-                <tr>
-                    <td>${app.facultyID}</td>
-                    <td>${app.overall}</td>
-                    <td>${app.date}</td>
-                    <td>${app.statusID}</td>
-                    <td>${app.description}</td>
-                </tr>
-            </c:forEach>
-        </table>
-
+        </c:forEach>
+    </table>
+    <br>
+    <form method="POST" action="Controller">
+        <input type="hidden" name="command" value="changeApplicantInfo"/>
+        <input type="submit" value="${content.getString("applicant.button.edit")}">
     </form>
+</form>
+<br>
+<form>
+    <h4>${content.getString("applicant.applications_list")}</h4>
+    <table border="1" cellspacing="0" cellpadding="2">
+        <tr>
+            <td>${content.getString("applicant.faculty")}</td>
+            <td>${content.getString("applicant.overall")}</td>
+            <td>${content.getString("applicant.date")}</td>
+            <td>${content.getString("applicant.status")}</td>
+            <td>${content.getString("applicant.description")}</td>
+        </tr>
+        <c:forEach  var="app" items="${applications}">
+            <tr>
+                <td>${app.facultyID}</td>
+                <td>${app.overall}</td>
+                <td>${app.date}</td>
+                <td>${app.statusID}</td>
+                <td>${app.description}</td>
+            </tr>
+        </c:forEach>
+    </table>
+    <br>
+    <form method="POST" action="Controller">
+        <input type="hidden" name="command" value="showFaculties"/>
+        <input type="submit" value="${content.getString("applicant.button.add")}">
+    </form>
+
+</form>
 </body>
 </html>

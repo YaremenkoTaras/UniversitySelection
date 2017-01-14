@@ -33,8 +33,8 @@
         </div>
     </div>
 
-
-    <form method="POST" action= "Controller" >
+    <br>
+    <form method="POST" action="Controller">
         <input type="hidden" name="command" value="register"/>
         <input type="submit" value="Go to Registation">
     </form>

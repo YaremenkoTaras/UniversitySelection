@@ -18,10 +18,10 @@ public interface ICommand {
     String USER = "user";
     String EMAIL = "email";
     String PASSWORD = "password";
-    String ROLE = "role";
     String REGISTER = "register";
     String MARKS = "marks";
     String APPLICATIONS = "applications";
+    String FACULTIES = "faculties";
 
 
 }

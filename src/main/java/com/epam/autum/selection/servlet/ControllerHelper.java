@@ -16,12 +16,11 @@ public class ControllerHelper {
 
     private ControllerHelper() {
         commands.put("login", new CommandLogin());
-        commands.put("signin", new CommandEmpty());
         commands.put("register", new CommandRegister());
         commands.put("registration", new CommandRegistration());
+        commands.put("showFaculties", new CommandShowFaculties());
+        commands.put("showFacultiy", new CommandShowFaculty());
     }
-
-
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));
         if (command == null) {
