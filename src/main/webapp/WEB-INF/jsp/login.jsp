@@ -33,9 +33,10 @@
         </div>
     </div>
 
-    <
-    <form method="LINK" action= /registration>
-        <input type="submit" value=" Go to Registation  ">
+
+    <form method="POST" action= "Controller" >
+        <input type="hidden" name="command" value="register"/>
+        <input type="submit" value="Go to Registation">
     </form>
 
 </div>

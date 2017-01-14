@@ -49,7 +49,7 @@ public class ApplicationLogic {
         return sum;
     }
 
-    public static int getOverall(int userID, int facultyID) throws LogicException {
+    public static int findOverall(int userID, int facultyID) throws LogicException {
         int overall = 0;
 
         Optional<WrapperConnection> connectionOptional = Optional.empty();
@@ -76,7 +76,7 @@ public class ApplicationLogic {
     public static ValidationResult addApplication(int userID, int facultyID, String description) throws LogicException {
         ValidationResult result;
 
-        int overall = getOverall(userID, facultyID);
+        int overall = findOverall(userID, facultyID);
 
         if (overall == 0)
             result = ValidationResult.MISSING_MARK;
@@ -99,5 +99,24 @@ public class ApplicationLogic {
         }
         return result;
     }
+
+    public static List<Application> findApplicationsByUser(int userID) throws LogicException {
+        List<Application> applications;
+
+        Optional<WrapperConnection> optConnection;
+        try {
+            optConnection = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
+            IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
+            applications = markDAO.findApplicationsByUser(userID);
+        }catch (SQLException e){
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+
+        return applications;
+    }
+
 
 }

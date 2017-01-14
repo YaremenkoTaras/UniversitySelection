@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 public class ApplicationDAO implements IApplicationDAO {
 
-    private static Logger log = LogManager.getLogger(UserDAO.class);
+    private static Logger log = LogManager.getLogger(ApplicationDAO.class);
 
     private WrapperConnection connection;
     private static ApplicationDAO instance;
@@ -35,6 +35,8 @@ public class ApplicationDAO implements IApplicationDAO {
 
 
     private static final String SELECT_ALL = "SELECT application_id,date,description,overall,faculty_id,user_id,application_status_id FROM application";
+    private static final String SELECT_BY_USER = "SELECT application_id,date,description,overall,faculty_id,application_status_id FROM application WHERE user_id=?";
+    private static final String SELECT_BY_FACULTY = "SELECT application_id,date,description,overall,user_id,application_status_id FROM application WHERE faculty_id=?";
     private static final String SELECT_BY_ID = "SELECT date,description,overall,faculty_id,user_id,application_status_id FROM application WHERE application_id=?";
 
     private static final String INSERT_APPLICATION = "INSERT INTO application(date,description,overall,faculty_id,user_id,application_status_id) VALUES(?,?,?,?,?,2)";
@@ -139,6 +141,54 @@ public class ApplicationDAO implements IApplicationDAO {
             throw new DAOException(e);
         }
         return rows > 0;
+    }
+
+    @Override
+    public List<Application> findApplicationsByUser(int userID) throws DAOException {
+        List<Application> allApp = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(SELECT_BY_USER)) {
+            st.setInt(1,userID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(APPLICATION_ID);
+                Date date = rs.getDate(DATE);
+                String desc = rs.getString(DESCRIPTION);
+                Integer over = rs.getInt(OVERALL);
+                Integer facultyID = rs.getInt(FACULTY_ID);
+                Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
+
+                Application app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                allApp.add(app);
+            }
+            log.info("Appclications by user retrieved");
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return allApp;
+    }
+
+    @Override
+    public List<Application> findApplicationsByFaculty(int facultyID) throws DAOException {
+        List<Application> allApp = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(SELECT_BY_FACULTY)) {
+            st.setInt(1,facultyID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(APPLICATION_ID);
+                Date date = rs.getDate(DATE);
+                String desc = rs.getString(DESCRIPTION);
+                Integer over = rs.getInt(OVERALL);
+                Integer userID = rs.getInt(USER_ID);
+                Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
+
+                Application app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                allApp.add(app);
+            }
+            log.info("Appclications by faculty retrieved");
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return allApp;
     }
 
     @Override

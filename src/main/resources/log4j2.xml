@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN" packages="com.epam.autum.selection">
 <appenders>
-    <RollingFile name="RollingFile" fileName="src/logs/log.log" filePattern="src/logs/log-%d{yyyy-MM-dd}.txt">
+    <RollingFile name="RollingFile" fileName="d:/logs/selection.log"
+                 filePattern="d:/logs/selection-%d{yyyy-MM-dd}.txt">
         <PatternLayout>
             <pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</pattern>
         </PatternLayout>

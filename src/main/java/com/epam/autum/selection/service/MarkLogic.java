@@ -11,6 +11,7 @@ import com.epam.autum.selection.util.ValidationResult;
 import com.epam.autum.selection.util.Validator;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,7 +25,7 @@ public class MarkLogic {
 
     public static ValidationResult addMark(int userID, int subjectID, int mark) throws LogicException {
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
-        Optional<WrapperConnection> optConnection = Optional.empty();
+        Optional<WrapperConnection> optConnection;
         if (isValid(mark))
             try {
                 optConnection = ConnectionPool.getInstance().takeConnection();
@@ -44,7 +45,6 @@ public class MarkLogic {
     }
 
     private static boolean isValid(int mark){
-
         return (mark > MIN_MARK && mark < MAX_MARK && Validator.validate(Integer.toString(mark),REGEXP_MARK));
     }
 
@@ -63,6 +63,22 @@ public class MarkLogic {
             throw new LogicException(e);
         }
         return Optional.ofNullable(mark);
+    }
+
+    public static List<ApplicantMark> getMarksByUser(int userID) throws LogicException {
+        List<ApplicantMark> marks;
+        Optional<WrapperConnection> optConnection;
+        try {
+            optConnection = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
+            IApplicantMarkDAO markDAO = DaoFactory.createApplicantMarkDAO(connection);
+            marks = markDAO.findMarkByUser(userID);
+        }catch (SQLException e){
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+        return marks;
     }
 
     public static boolean deleteMark(int markID) throws LogicException {

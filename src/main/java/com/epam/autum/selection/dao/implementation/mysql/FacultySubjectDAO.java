@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 public class FacultySubjectDAO implements IFacultySubjectDAO {
 
-    private static Logger log = LogManager.getLogger(UserDAO.class);
+    private static Logger log = LogManager.getLogger(FacultySubject.class);
 
     private WrapperConnection connection;
     private static FacultySubjectDAO instance;

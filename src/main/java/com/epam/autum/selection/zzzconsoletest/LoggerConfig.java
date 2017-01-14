@@ -1,4 +1,4 @@
-package com.epam.autum.selection.consoletest;
+package com.epam.autum.selection.zzzconsoletest;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;

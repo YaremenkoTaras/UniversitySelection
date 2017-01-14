@@ -1,3 +1,0 @@
-14:26:59 [main] INFO  com.epam.autum.selection.consoletest.LoggerConfig - Hello
-14:26:59 [main] ERROR com.epam.autum.selection.consoletest.LoggerConfig - Bad day
-14:26:59 [main] DEBUG com.epam.autum.selection.consoletest.LoggerConfig - Debug

@@ -41,10 +41,8 @@ public class Controller extends HttpServlet {
             ICommand command = controllerHelper.getCommand(request);
             page = command.execute(request, response);
         } catch (ServletException e) {
-            System.err.println(e.getMessage());
             log.error(e.getMessage());
         } catch (IOException e) {
-            System.err.println(e.getMessage());
             log.error(e.getMessage());
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);

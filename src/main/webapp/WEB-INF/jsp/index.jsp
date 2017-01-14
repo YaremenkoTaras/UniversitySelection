@@ -9,13 +9,13 @@
 <body>
 
 <c:if test="${user == null}">
-    <jsp:forward page="/login"></jsp:forward>
+    <jsp:forward page="/WEB-INF/jsp/login.jsp"></jsp:forward>
 </c:if>
 <c:if test="${role == 1  }">
-    <jsp:forward page="/admin"></jsp:forward>
+    <jsp:forward page="/WEB-INF/jsp/admin.jsp"></jsp:forward>
 </c:if>
 <c:if test="${role == 2  }">
-    <jsp:forward page="/applicant"></jsp:forward>
+    <jsp:forward page="/WEB-INF/jsp/applicant.jsp"></jsp:forward>
 </c:if>
 
 </body>

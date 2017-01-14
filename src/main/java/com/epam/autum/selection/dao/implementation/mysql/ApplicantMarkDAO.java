@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 public class ApplicantMarkDAO implements IApplicantMarkDAO {
 
-    private static Logger log = LogManager.getLogger(UserDAO.class);
+    private static Logger log = LogManager.getLogger(ApplicantMarkDAO.class);
 
     private WrapperConnection connection;
     private static ApplicantMarkDAO instance = null;

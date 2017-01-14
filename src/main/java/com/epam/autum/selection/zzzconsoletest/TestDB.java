@@ -1,4 +1,4 @@
-package com.epam.autum.selection.consoletest;
+package com.epam.autum.selection.zzzconsoletest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
