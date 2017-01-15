@@ -11,6 +11,11 @@
 <head>
     <title>All faculties</title>
 </head>
+<header>
+    <div class="container">
+        <h3>${content.getString("faculties.header")}</h3>
+    </div>
+</header>
 <body>
 <c:forEach var="faculty" items="${faculties}">
     <a href="Controller?command=showFaculty&id=${faculty.id}">

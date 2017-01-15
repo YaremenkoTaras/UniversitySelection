@@ -23,6 +23,7 @@ public interface ICommand {
     String APPLICATIONS = "applications";
     String FACULTIES = "faculties";
     String FACULTY = "faculty";
-
-
+    String USER_APPLICATION = "userapp";
+    String FACULTY_SUBJECTS = "facultysubjects";
+    String SUBJECTS = "subjects";
 }

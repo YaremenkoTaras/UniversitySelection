@@ -13,7 +13,7 @@
 </head>
 <body>
 <form>
-    <h4>${content.getString("applicant.account")}: ${user.name}</h4>
+    <h4>${content.getString("applicant.profile")}: ${user.name}</h4>
     <br>
     ${content.getString("applicant.marks")}
     <table border="1" cellspacing="0" cellpadding="2">
@@ -40,11 +40,11 @@
     <h4>${content.getString("applicant.applications_list")}</h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
-            <td>${content.getString("applicant.faculty")}</td>
-            <td>${content.getString("applicant.overall")}</td>
-            <td>${content.getString("applicant.date")}</td>
-            <td>${content.getString("applicant.status")}</td>
-            <td>${content.getString("applicant.description")}</td>
+            <td>${content.getString("application.applicant")}</td>
+            <td>${content.getString("application.overall")}</td>
+            <td>${content.getString("application.date")}</td>
+            <td>${content.getString("application.status")}</td>
+            <td>${content.getString("application.description")}</td>
         </tr>
         <c:forEach  var="app" items="${applications}">
             <tr>

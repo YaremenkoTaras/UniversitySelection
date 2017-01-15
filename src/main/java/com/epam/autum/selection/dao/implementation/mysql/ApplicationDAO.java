@@ -38,6 +38,7 @@ public class ApplicationDAO implements IApplicationDAO {
     private static final String SELECT_BY_USER = "SELECT application_id,date,description,overall,faculty_id,application_status_id FROM application WHERE user_id=?";
     private static final String SELECT_BY_FACULTY = "SELECT application_id,date,description,overall,user_id,application_status_id FROM application WHERE faculty_id=?";
     private static final String SELECT_BY_ID = "SELECT date,description,overall,faculty_id,user_id,application_status_id FROM application WHERE application_id=?";
+    private static final String SELECT_BY_USER_FACULTY = "SELECT application_id,date,description,overall,application_status_id FROM application WHERE user_id=? AND faculty_id=?";
 
     private static final String INSERT_APPLICATION = "INSERT INTO application(date,description,overall,faculty_id,user_id,application_status_id) VALUES(?,?,?,?,?,2)";
 
@@ -52,7 +53,6 @@ public class ApplicationDAO implements IApplicationDAO {
             instance = new ApplicationDAO(connection);
         return instance;
     }
-
 
     @Override
     public boolean create(Application entity) throws DAOException {
@@ -121,6 +121,31 @@ public class ApplicationDAO implements IApplicationDAO {
                 log.info("Application [id = " + id + "] found");
             } else {
                 log.info("Application [id = " + id + "] not found");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return Optional.ofNullable(app);
+    }
+
+    @Override
+    public Optional findApplicationByUserFaculty(int userID, int facultyID) throws DAOException {
+        Application app = null;
+        try (PreparedStatement st = connection.prepareStatement(SELECT_BY_USER_FACULTY)) {
+            st.setInt(1, userID);
+            st.setInt(2, facultyID);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Integer id = rs.getInt(APPLICATION_ID);
+                Date date = rs.getDate(DATE);
+                String desc = rs.getString(DESCRIPTION);
+                Integer over = rs.getInt(OVERALL);
+                Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
+
+                app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                log.info("User Application for faculty found, [id = " + id + "]");
+            } else {
+                log.info("User Application for faculty not found");
             }
         } catch (SQLException e) {
             throw new DAOException(e);

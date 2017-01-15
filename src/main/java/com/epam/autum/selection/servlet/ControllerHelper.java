@@ -20,6 +20,7 @@ public class ControllerHelper {
         commands.put("registration", new CommandRegistration());
         commands.put("showFaculties", new CommandShowFaculties());
         commands.put("showFaculty", new CommandShowFaculty());
+        commands.put("addApplication", new CommandAddApplication());
     }
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));

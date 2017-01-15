@@ -21,18 +21,14 @@ import java.util.Optional;
  */
 public class SubjectLogic {
 
-    public static List<Subject> getSubjectsByFaculty(int facultyID) throws LogicException {
-        List<Subject> subjectList = new ArrayList<>();
-        Optional<WrapperConnection> optConnection = Optional.empty();
+    public static List<FacultySubject> getSubjectsByFaculty(int facultyID) throws LogicException {
+        List<FacultySubject> subjectList;
+        Optional<WrapperConnection> optConnection;
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IFacultySubjectDAO dao = DaoFactory.createFacultySubjectDAO(connection);
-            List<FacultySubject> list = dao.findSubjectsByFaculty(facultyID);
-            ISubjectDAO daoSubject = DaoFactory.createSubjectDAO(connection);
-            for (FacultySubject value: list){
-                subjectList.add(daoSubject.findEntityById(value.getSubjectID()).get());
-            }
+            subjectList = dao.findSubjectsByFaculty(facultyID);
         } catch (SQLException e) {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {

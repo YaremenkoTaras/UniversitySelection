@@ -45,14 +45,14 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
         this.connection = connection;
     }
 
-    public static FacultySubjectDAO getInstance(WrapperConnection connection){
+    public static FacultySubjectDAO getInstance(WrapperConnection connection) {
         if (instance == null)
             instance = new FacultySubjectDAO(connection);
-        return  instance;
+        return instance;
     }
 
     @Override
-    public boolean delete(FacultySubject subject) throws DAOException{
+    public boolean delete(FacultySubject subject) throws DAOException {
         int id1 = subject.getFacultyID();
         int id2 = subject.getSubjectID();
         int rows;
@@ -61,7 +61,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
             st.setInt(2, id2);
             rows = st.executeUpdate();
             if (rows > 0) {
-                log.info("Subject [faculty_id = " + id1 + ", subject_id= " + id2 +"] deleted");
+                log.info("Subject [faculty_id = " + id1 + ", subject_id= " + id2 + "] deleted");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -72,7 +72,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     @Override
     public boolean create(FacultySubject entity) throws DAOException {
         boolean created = false;
-        if (!checkEntity(entity.getFacultyID(),entity.getSubjectID()))
+        if (!checkEntity(entity.getFacultyID(), entity.getSubjectID()))
             try (PreparedStatement st = connection.prepareStatement(INSERT_FACULTY_SUBJECT)) {
                 st.setInt(1, entity.getFacultyID());
                 st.setInt(2, entity.getSubjectID());
@@ -114,7 +114,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
                 int sID = rs.getInt(SUBJECT_ID);
                 int minMark = rs.getInt(MIN_MARK);
 
-                FacultySubject subject = new FacultySubject(fID,sID,minMark);
+                FacultySubject subject = new FacultySubject(fID, sID, minMark);
                 allSubjects.add(subject);
             }
             log.info("All faculty subjects retrieved");
@@ -130,16 +130,14 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_FACULTY)) {
             st.setInt(1, facultyID);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int sID = rs.getInt(SUBJECT_ID);
                 int minMark = rs.getInt(MIN_MARK);
 
-                FacultySubject subject = new FacultySubject(facultyID,sID,minMark);
+                FacultySubject subject = new FacultySubject(facultyID, sID, minMark);
                 allSubjects.add(subject);
-                log.info("Faculty  [id = " + facultyID + "] subjects found");
-            } else {
-                log.info("Faculty [id = " + facultyID + "] subjects not found");
             }
+            log.info("Faculty  [id = " + facultyID + "] subjects found");
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -156,10 +154,10 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
             if (rs.next()) {
                 int mark = rs.getInt(MIN_MARK);
 
-                minMark = new FacultySubject(facultyID,subjectID,mark);
-                log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID +"] found");
+                minMark = new FacultySubject(facultyID, subjectID, mark);
+                log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID + "] found");
             } else {
-                log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID +"] not found");
+                log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID + "] not found");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
