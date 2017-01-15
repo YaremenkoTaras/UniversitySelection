@@ -22,6 +22,7 @@ public interface ICommand {
     String MARKS = "marks";
     String APPLICATIONS = "applications";
     String FACULTIES = "faculties";
+    String FACULTY = "faculty";
 
 
 }

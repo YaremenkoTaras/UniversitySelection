@@ -118,5 +118,22 @@ public class ApplicationLogic {
         return applications;
     }
 
+    public static List<Application> findApplicationsByFaculty(int facultyID) throws LogicException {
+        List<Application> applications;
+
+        Optional<WrapperConnection> optConnection;
+        try {
+            optConnection = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
+            IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
+            applications = markDAO.findApplicationsByFaculty(facultyID);
+        }catch (SQLException e){
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+        return applications;
+    }
+
 
 }
