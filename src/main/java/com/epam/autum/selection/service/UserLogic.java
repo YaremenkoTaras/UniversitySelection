@@ -58,7 +58,7 @@ public class UserLogic {
         } catch (DAOException e) {
             throw new LogicException(e);
         } finally {
-            //optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return user;
     }

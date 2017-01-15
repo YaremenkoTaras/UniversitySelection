@@ -47,7 +47,7 @@ public class CommandShowFaculty implements ICommand {
         Faculty faculty = FacultyLogic.findFacultyByID(id);
         List<FacultySubject> subjects= SubjectLogic.getSubjectsByFaculty(id);
         List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        Application application = ApplicationLogic.checkApplication(userID, id);
+        Application application = ApplicationLogic.findApplication(userID, id);
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(FACULTY_SUBJECTS, subjects);

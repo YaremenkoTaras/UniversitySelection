@@ -23,7 +23,7 @@ public class SubjectLogic {
 
     public static List<FacultySubject> getSubjectsByFaculty(int facultyID) throws LogicException {
         List<FacultySubject> subjectList;
-        Optional<WrapperConnection> optConnection;
+        Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
@@ -33,6 +33,8 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        }finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return subjectList;
     }
@@ -50,6 +52,8 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        }finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return mimMark;
     }
@@ -66,6 +70,8 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        }finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return subjectList;
     }
@@ -89,6 +95,8 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        }finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return result;
     }

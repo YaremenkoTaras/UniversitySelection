@@ -66,7 +66,7 @@
     </div>
 </c:if>
 
-<c:if test="${user.roleID == 2 && userapp!= null}">
+<c:if test="${user.roleID == 2 && userapp != null}">
     <h4>${content.getString("faculty.user_application")} ${userapp.date}</h4>
 </c:if>
 

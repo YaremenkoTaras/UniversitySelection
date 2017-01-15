@@ -20,7 +20,7 @@ public class FacultyLogic {
 
     public static List<Faculty> findAllFaculties() throws LogicException {
         List<Faculty> faculties = new ArrayList<>();
-        Optional<WrapperConnection> connectionOptional;
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
         try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
@@ -28,6 +28,8 @@ public class FacultyLogic {
             faculties = facultyDAO.findAll();
         }catch (SQLException | DAOException e){
             throw new LogicException(e);
+        }finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return faculties;
     }
@@ -35,15 +37,17 @@ public class FacultyLogic {
     public static Faculty findFacultyByID(int facultID) throws LogicException {
         Faculty faculty;
 
-        Optional<WrapperConnection> connectionOptional;
-
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+        WrapperConnection connection = null;
         try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
-            WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
+            connection = connectionOptional.orElseThrow(SQLException::new);
             IFacultyDAO facultyDAO = DaoFactory.createFacultyDAO(connection);
             faculty = facultyDAO.findEntityById(facultID).get();
         } catch (DAOException | SQLException e) {
             throw new LogicException(e);
+        }finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return faculty;
     }
