@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>${content.getString("login.ad_commission")}</title>
+    <title>${content.getString("login.u_selection")}</title>
 </head>
 <body>
 <div class="container header_text">
-    <h1>${content.getString("login.ad_commission")}</h1>
+    <h1>${content.getString("login.u_selection")}</h1>
 </div>
 
 <div class="modal fade" id="login_modal">
@@ -20,12 +20,12 @@
                     <div class="md-form">
                         <input type="email" name="email" value="" id="form9" class="form-control validate" name="email"
                                required>
-                        <label for="form9">${content.getString("email")}:</label>
+                        <label for="form9">${content.getString("login.email")}:</label>
                     </div>
                     <div class="md-form">
                         <input type="password" name="password" value="" id="form10" class="form-control validate"
                                required>
-                        <label for="form10">${content.getString("password")}:</label>
+                        <label for="form10">${content.getString("login.password")}:</label>
                     </div>
                     <button name="signIn" value="signIn" class="btn">${content.getString("login.sign_in")}</button>
                 </form>
