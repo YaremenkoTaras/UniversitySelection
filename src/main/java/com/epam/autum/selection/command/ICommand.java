@@ -10,11 +10,11 @@ import java.io.IOException;
  */
 public interface ICommand {
 
-    String execute(HttpServletRequest request, HttpServletResponse responce)
+    String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException;
 
 
-    String USER_ID = "user_id";
+    String ID = "id";
     String USER = "user";
     String EMAIL = "email";
     String PASSWORD = "password";
@@ -26,4 +26,6 @@ public interface ICommand {
     String USER_APPLICATION = "userapp";
     String FACULTY_SUBJECTS = "facultysubjects";
     String SUBJECTS = "subjects";
+    String MISSING_MARK = "missingmark";
+    String LOW_MARK = "lowmark";
 }

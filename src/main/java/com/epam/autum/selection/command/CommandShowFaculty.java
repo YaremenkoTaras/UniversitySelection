@@ -26,11 +26,11 @@ public class CommandShowFaculty implements ICommand {
     private static Logger log = LogManager.getLogger(CommandShowFaculty.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
 
         try {
-            loadAttributes(request, responce);
+            loadAttributes(request, response);
         } catch (LogicException e) {
             log.error(e);
         }
@@ -38,9 +38,9 @@ public class CommandShowFaculty implements ICommand {
         return page;
     }
 
-    private void loadAttributes(HttpServletRequest request, HttpServletResponse responce) throws LogicException {
+    private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter(ID));
         User user = (User) request.getSession().getAttribute(USER);
         int userID = user.getId();
 

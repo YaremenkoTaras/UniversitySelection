@@ -11,7 +11,7 @@ import java.io.IOException;
 public class CommandRegistration implements ICommand {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = request.getContextPath();
         return page;
     }

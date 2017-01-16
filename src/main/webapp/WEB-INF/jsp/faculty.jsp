@@ -12,9 +12,9 @@
     <title>${content.getString("faculty")}: ${faculty.name}</title>
 </head>
 <header>
-    <h3>
-        ${faculty.name}
-    </h3>
+    <h3>${faculty.name}</h3>
+    <h4>${content.getString("faculty.total")}:  ${faculty.numberOfStudent}</h4>
+
 </header>
 <body>
 
@@ -57,13 +57,22 @@
 <br>
 
 
-<c:if test="${user.roleID == 2 && userapp == null}">
+<c:if test="${user.roleID == 2 && userapp == null && missingmark == null && lowmark == null}">
     <div class="container">
         <form action="/Controller" method="post">
             <input type="hidden" name="command" value="addApplication"/>
+            <input type="hidden" name="id" value="${faculty.id}"/>
             <input type="submit" value="${content.getString("faculty.add_application")}">
         </form>
     </div>
+</c:if>
+
+<c:if test="${missingmark != null}">
+    <h4>${content.getString("faculty.missmark")}</h4>
+</c:if>
+
+<c:if test="${lowmark != null}">
+    <h4>${content.getString("faculty.lowmark")}</h4>
 </c:if>
 
 <c:if test="${user.roleID == 2 && userapp != null}">

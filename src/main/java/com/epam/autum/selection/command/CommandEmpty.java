@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class CommandEmpty implements ICommand {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return PageConfigurator.getConfigurator().getPage(PageConfigurator.ERROR_PAGE);
     }
 }

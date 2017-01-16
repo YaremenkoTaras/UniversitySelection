@@ -24,36 +24,56 @@ import java.util.Optional;
  */
 public class ApplicationLogic {
 
-    private static boolean hasAllSubjectMark(List<ApplicantMark> markList, List<FacultySubject> subjectList) throws LogicException {
+    public static ValidationResult checkMarkForFaculty(int userID, int facultyID) throws LogicException {
 
-        List<Integer> listMark = new ArrayList<>();
-        List<Integer> listSubj = new ArrayList<>();
+        ValidationResult result = ValidationResult.UNKNOWN_ERROR;
 
-        markList.forEach(v->listMark.add(v.getSubjectID()));
-        subjectList.forEach(s->listSubj.add(s.getSubjectID()));
+        List<ApplicantMark> markList;
+        List<FacultySubject> subjectList;
 
-        return markList.containsAll(listSubj);
-    }
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+        try {
+            connectionOptional = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
+            IApplicantMarkDAO markDAO = DaoFactory.createApplicantMarkDAO(connection);
+            IFacultySubjectDAO subjectDAO = DaoFactory.createFacultySubjectDAO(connection);
 
-    private static int hasAllMinMark(List<ApplicantMark> markList, List<FacultySubject> subjectList){
-        int sum = 0;
+            markList = markDAO.findMarkByUser(userID);
+            subjectList = subjectDAO.findSubjectsByFaculty(facultyID);
+
+            result = ValidationResult.ALL_RIGHT;
+        } catch (SQLException e) {
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
+        }
+
+        List<Integer> mark = new ArrayList<>();
+        List<Integer> subj = new ArrayList<>();
+
+        markList.forEach(v -> mark.add(v.getSubjectID()));
+        subjectList.forEach(s -> subj.add(s.getSubjectID()));
+
+        if (!mark.containsAll(subj))
+            result = ValidationResult.MISSING_MARK;
         for (FacultySubject fs : subjectList) {
-            for (ApplicantMark m : markList){
-                if (fs.getSubjectID() == m.getSubjectID()){
-                    if (m.getMark() > fs.getMinMark())
-                        sum += m.getMark();
-                    else return -1;
+            for (ApplicantMark m : markList) {
+                if (fs.getSubjectID() == m.getSubjectID() && m.getMark() < fs.getMinMark()) {
+                    result = ValidationResult.LOW_MARK;
                 }
             }
         }
-        return sum;
+
+        return result;
     }
 
     public static int findOverall(int userID, int facultyID) throws LogicException {
         int overall = 0;
 
-        Optional<WrapperConnection> connectionOptional;
-        try{
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+        try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
 
@@ -63,12 +83,19 @@ public class ApplicationLogic {
             List<ApplicantMark> markList = markDAO.findMarkByUser(userID);
             List<FacultySubject> subjectList = subjectDAO.findSubjectsByFaculty(facultyID);
 
-            if(hasAllSubjectMark(markList,subjectList))
-                overall = hasAllMinMark(markList,subjectList);
-        }catch (SQLException e){
-            throw new LogicException("DB connection error : " , e);
-        }catch (DAOException e){
+            for (FacultySubject fs : subjectList) {
+                for (ApplicantMark m : markList){
+                    if (fs.getSubjectID() == m.getSubjectID()){
+                            overall += m.getMark();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
             throw new LogicException(e);
+        } finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return overall;
     }
@@ -88,13 +115,15 @@ public class ApplicationLogic {
                 connectionOptional = ConnectionPool.getInstance().takeConnection();
                 WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
                 IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
-                Application application = new Application(0, DateConverter.getCurrentDate(),description,overall,facultyID,userID,2);
+                Application application = new Application(0, DateConverter.getCurrentDate(), description, overall, facultyID, userID, 2);
                 applicationDAO.create(application);
                 result = ValidationResult.ALL_RIGHT;
             } catch (SQLException e) {
                 throw new LogicException("DB connection error : ", e);
             } catch (DAOException e) {
                 throw new LogicException(e);
+            } finally {
+                connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
             }
         }
         return result;
@@ -103,16 +132,18 @@ public class ApplicationLogic {
     public static List<Application> findApplicationsByUser(int userID) throws LogicException {
         List<Application> applications;
 
-        Optional<WrapperConnection> optConnection;
+        Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
             applications = markDAO.findApplicationsByUser(userID);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        } finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
 
         return applications;
@@ -121,16 +152,18 @@ public class ApplicationLogic {
     public static Application findApplication(int userID, int facultyId) throws LogicException {
         Application application;
 
-        Optional<WrapperConnection> optConnection;
+        Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
-            application = markDAO.findApplicationByUserFaculty(userID,facultyId).orElse(null);
-        }catch (SQLException e){
+            application = markDAO.findApplicationByUserFaculty(userID, facultyId).orElse(null);
+        } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        } finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return application;
     }
@@ -138,16 +171,18 @@ public class ApplicationLogic {
     public static List<Application> findApplicationsByFaculty(int facultyID) throws LogicException {
         List<Application> applications;
 
-        Optional<WrapperConnection> optConnection;
+        Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
             applications = markDAO.findApplicationsByFaculty(facultyID);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
+        } finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return applications;
     }

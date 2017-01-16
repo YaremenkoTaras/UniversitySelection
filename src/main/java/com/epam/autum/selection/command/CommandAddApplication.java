@@ -22,26 +22,45 @@ public class CommandAddApplication implements ICommand {
 
     @Override
 
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getAttribute(USER_APPLICATION)!= null) {
+            return (new CommandShowFaculty()).execute(request,response);
+        }
         String page = null;
         HttpSession session = request.getSession();
 
-        int facultyID = Integer.parseInt(request.getParameter("id"));
-        int userID = ((User) session.getAttribute(USER)).getId();
-        String description = "";
-
-        ValidationResult result = ValidationResult.UNKNOWN_ERROR;
+        Integer userID    = null;
+        Integer facultyID = null;
         try {
-            result = ApplicationLogic.addApplication(userID, facultyID, description);
+            facultyID = Integer.parseInt(request.getParameter(ID));
+            userID = ((User) session.getAttribute(USER)).getId();
+        }catch (Exception e) {
+            log.error(e);
+            System.err.println(e);
+        }
+        String description = "Description";
+        String message;
+        ValidationResult result;
+        try {
+            result = ApplicationLogic.checkMarkForFaculty(userID,facultyID);
+            switch (result){
+                case ALL_RIGHT:
+                    result = ApplicationLogic.addApplication(userID,facultyID,description);
+                    if (result == ValidationResult.ALL_RIGHT)
+                        message = "";
+                    break;
+                case MISSING_MARK:
+                    request.setAttribute(MISSING_MARK, true); break;
+                case LOW_MARK:
+                    request.setAttribute(LOW_MARK, true); break;
+                default:
+                    break;
+            }
+
         } catch (LogicException e) {
             log.error(e);
         }
-        switch (result){
-            case ALL_RIGHT: page = (new CommandShowFaculty()).execute(request,responce); break;
-
-            default: break;
-        }
-
+        page = (new CommandShowFaculty()).execute(request,response);
         return page;
     }
 }

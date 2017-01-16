@@ -21,10 +21,10 @@ public class CommandShowFaculties implements ICommand{
     private static Logger log = LogManager.getLogger(CommandShowFaculties.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            loadAttributes(request,responce);
+            loadAttributes(request,response);
         } catch (LogicException e) {
             log.error(e);
         }
@@ -32,7 +32,7 @@ public class CommandShowFaculties implements ICommand{
         return PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTIES_PAGE);
     }
 
-    private void loadAttributes(HttpServletRequest request, HttpServletResponse responce) throws LogicException {
+    private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
         List<Faculty> faculties = FacultyLogic.findAllFaculties();
         request.setAttribute(FACULTIES, faculties);
     }

@@ -36,7 +36,7 @@ public class ApplicationDAO implements IApplicationDAO {
 
     private static final String SELECT_ALL = "SELECT application_id,date,description,overall,faculty_id,user_id,application_status_id FROM application";
     private static final String SELECT_BY_USER = "SELECT application_id,date,description,overall,faculty_id,application_status_id FROM application WHERE user_id=?";
-    private static final String SELECT_BY_FACULTY = "SELECT application_id,date,description,overall,user_id,application_status_id FROM application WHERE faculty_id=?";
+    private static final String SELECT_BY_FACULTY = "SELECT application_id,date,description,overall,user_id,application_status_id FROM application WHERE faculty_id=? ORDER BY overall DESC";
     private static final String SELECT_BY_ID = "SELECT date,description,overall,faculty_id,user_id,application_status_id FROM application WHERE application_id=?";
     private static final String SELECT_BY_USER_FACULTY = "SELECT application_id,date,description,overall,application_status_id FROM application WHERE user_id=? AND faculty_id=?";
 
