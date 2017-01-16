@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 public class PageConfigurator {
 	public static final String LOGIN_PAGE = "LOGIN";
+	public static final String INDEX_PAGE = "INDEX";
 	public static final String ADMIN_PAGE = "ADMIN";
 	public static final String APPLICANT_PAGE = "APPLICANT";
 	public static final String GUEST_PAGE = "GUEST";

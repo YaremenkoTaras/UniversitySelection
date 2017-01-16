@@ -28,4 +28,5 @@ public interface ICommand {
     String SUBJECTS = "subjects";
     String MISSING_MARK = "missingmark";
     String LOW_MARK = "lowmark";
+
 }

@@ -10,6 +10,7 @@
 <header>
     <div class="container">
         <h3>${content.getString("registration")}</h3>
+        <h2>${register}</h2>
     </div>
 </header>
 <body class="body">
@@ -30,15 +31,20 @@
                        name="firstName" id="form2" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z]+$">
 
                 </input>
-                <label class="active" for="form2">${content.getString("registration.frist_name")}</label>
+                <label class="active" for="form2">${content.getString("registration.first_name")}</label>
             </div>
         </div>
-
+        <h4>${content.getString("registration.address")}: </h4>
+        <div class="col-xs-6 md-form">
+            <input class="col-xs-2 form-control validate" type="text" placeholder="Address" value="${address}"
+                   name="address" id="form9" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z\s0-9]+$">
+            </input>
+        </div>
 
         <h4>${content.getString("registration.date_of_birth")}: </h4>
         <div class="row">
             <div class="col-xs-4 md-form">
-                <input class="col-xs-1 form-control validate" placeholder="1999" type="number" min="1900" max="2016"
+                <input class="col-xs-1 form-control validate" placeholder="1999" type="number" min="1989" max="2016"
                        step="1" value="${year}" name="year" id="form3" required>
 
                 </input>
@@ -49,18 +55,18 @@
                 <p class="description">${content.getString("registration.month")}</p>
                 <div>
                     <select size="12"  name="month" required>
-                        <option selected value="january">January</option>
-                        <option value="feb">feb</option>
-                        <option value="mart">mart</option>
-                        <option value="april">april</option>
-                        <option value="may">may</option>
-                        <option value="june">june</option>
-                        <option value="july">july</option>
-                        <option value="august">august</option>
-                        <option value="sep">sep</option>
-                        <option value="oct">oct</option>
-                        <option value="nov">nov</option>
-                        <option value="dec">dec</option>
+                        <option selected value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                     </select>
                 </div>
             </div>
@@ -84,7 +90,7 @@
             </div>
         </div>
 
-        <<br>
+        <br>
 
         <div class="row">
             <div class="md-form col-xs-4">
@@ -108,8 +114,8 @@
                 <label class="active" for="form8">${content.getString("registration.repeat_password")}</label>
             </div>
         </div>
-
-        <input type="hidden" name="command" value="register"/>
+        <input type="hidden" name="id" value="${id}">
+        <input type="hidden" name="command" value="registration"/>
         <input type="submit" value="Create account">
 
     </form>

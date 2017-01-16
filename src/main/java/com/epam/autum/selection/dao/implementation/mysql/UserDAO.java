@@ -121,7 +121,7 @@ public class UserDAO implements IUserDAO{
                 String email = rs.getString(EMAIL);
                 String pass = rs.getString(PASSWORD);
                 int role_id = rs.getByte(USER_ROLE_ID);
-                user =new User(id,name,email,pass,sex,birth,address,phone,role_id);
+                user = new User(id,name,email,pass,sex,birth,address,phone,role_id);
                 log.info("User [id = " + id + "] found");
             } else {
                 log.info("User [id = " + id + "] not found");

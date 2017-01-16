@@ -203,7 +203,6 @@ public class UserLogic {
                 WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
                 IUserDAO userDAO = DaoFactory.createUserDAO(connection);
                 if (userDAO.isEmailFree(email)) {
-
                     user.setEmail(email);
                     user.setPassword(password);
                     boolean registered = userDAO.create(user);
