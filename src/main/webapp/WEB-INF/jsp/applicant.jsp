@@ -68,6 +68,11 @@
         <input type="submit" value="${content.getString("applicant.button.add")}">
     </form>
 
+    <form method="post" action="/Controller">
+        <input type="hidden" name="command" value="logout"/>
+        <input type="submit" value="${content.getString("applicant.button.logout")}">
+    </form>
+
 </form>
 </body>
 </html>
