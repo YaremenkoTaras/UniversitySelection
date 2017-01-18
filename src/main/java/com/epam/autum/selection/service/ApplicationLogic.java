@@ -46,7 +46,7 @@ public class ApplicationLogic {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
-        }finally {
+        } finally {
             connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
 
@@ -84,9 +84,9 @@ public class ApplicationLogic {
             List<FacultySubject> subjectList = subjectDAO.findSubjectsByFaculty(facultyID);
 
             for (FacultySubject fs : subjectList) {
-                for (ApplicantMark m : markList){
-                    if (fs.getSubjectID() == m.getSubjectID()){
-                            overall += m.getMark();
+                for (ApplicantMark m : markList) {
+                    if (fs.getSubjectID() == m.getSubjectID()) {
+                        overall += m.getMark();
                     }
                 }
             }
@@ -101,31 +101,27 @@ public class ApplicationLogic {
     }
 
     public static ValidationResult addApplication(int userID, int facultyID, String description) throws LogicException {
+
         ValidationResult result;
 
         int overall = findOverall(userID, facultyID);
 
-        if (overall == 0)
-            result = ValidationResult.MISSING_MARK;
-        else if (overall == -1)
-            result = ValidationResult.LOW_MARK;
-        else {
-            Optional<WrapperConnection> connectionOptional = Optional.empty();
-            try {
-                connectionOptional = ConnectionPool.getInstance().takeConnection();
-                WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
-                IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
-                Application application = new Application(0, DateConverter.getCurrentDate(), description, overall, facultyID, userID, 2);
-                applicationDAO.create(application);
-                result = ValidationResult.ALL_RIGHT;
-            } catch (SQLException e) {
-                throw new LogicException("DB connection error : ", e);
-            } catch (DAOException e) {
-                throw new LogicException(e);
-            } finally {
-                connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
-            }
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+        try {
+            connectionOptional = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
+            IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
+            Application application = new Application(0, DateConverter.getCurrentDate(), description, overall, facultyID, userID, 2);
+            applicationDAO.create(application);
+            result = ValidationResult.ALL_RIGHT;
+        } catch (SQLException e) {
+            throw new LogicException("DB connection error : ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        } finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
+
         return result;
     }
 

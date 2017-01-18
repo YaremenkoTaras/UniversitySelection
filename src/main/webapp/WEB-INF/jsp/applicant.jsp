@@ -29,11 +29,16 @@
             </tr>
         </c:forEach>
     </table>
+    <form method="POST" action="Controller">
+        <input type="hidden" name="command" value="addMark"/>
+        <input type="submit" value="${content.getString("applicant.button.add_mark")}">
+    </form>
     <br>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="changeApplicantInfo"/>
         <input type="submit" value="${content.getString("applicant.button.edit")}">
     </form>
+
 </form>
 <br>
 <form>

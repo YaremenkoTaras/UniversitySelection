@@ -36,7 +36,6 @@ public class CommandAddApplication implements ICommand {
             userID = ((User) session.getAttribute(USER)).getId();
         }catch (Exception e) {
             log.error(e);
-            System.err.println(e);
         }
         String description = "Description";
         String message;

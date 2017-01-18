@@ -21,6 +21,9 @@ public class ControllerHelper {
         commands.put("showFaculties", new CommandShowFaculties());
         commands.put("showFaculty", new CommandShowFaculty());
         commands.put("addApplication", new CommandAddApplication());
+        commands.put("addMark", new CommandAddMark());
+        commands.put("showApplicant",new CommandShowApplicant());
+
     }
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));

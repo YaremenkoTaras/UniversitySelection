@@ -20,6 +20,7 @@ public interface ICommand {
     String PASSWORD = "password";
     String REGISTER = "register";
     String MARKS = "marks";
+    String MARK = "mark";
     String APPLICATIONS = "applications";
     String FACULTIES = "faculties";
     String FACULTY = "faculty";
@@ -28,5 +29,6 @@ public interface ICommand {
     String SUBJECTS = "subjects";
     String MISSING_MARK = "missingmark";
     String LOW_MARK = "lowmark";
+    String SUBJECT = "subject";
 
 }

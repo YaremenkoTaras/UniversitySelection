@@ -74,7 +74,6 @@
             <div class="col-xs-4  md-form">
                 <input class="col-xs-2 form-control validate" placeholder="1" type="number" min="1" max="31"
                        value="${day}" name="day" id="form4" required>
-
                 </input>
                 <label class="active" for="form4">${content.getString("registration.day")}</label>
             </div>
@@ -116,7 +115,7 @@
         </div>
         <input type="hidden" name="id" value="${id}">
         <input type="hidden" name="command" value="registration"/>
-        <input type="submit" value="Create account">
+        <button name="submit" id="reg_submit_btn" class="btn col-xs-4">${content.getString("registration.submit_btn")}</button>
 
     </form>
 </div>
