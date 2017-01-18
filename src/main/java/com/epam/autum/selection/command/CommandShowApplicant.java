@@ -10,10 +10,8 @@ import com.epam.autum.selection.service.PageConfigurator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ public class CommandShowApplicant implements ICommand {
     private static Logger log = LogManager.getLogger(CommandShowApplicant.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response){
         String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.APPLICANT_PAGE);
         if (request.getSession().getAttribute(USER) == null)
             page = PageConfigurator.getConfigurator().getPage(PageConfigurator.LOGIN_PAGE);

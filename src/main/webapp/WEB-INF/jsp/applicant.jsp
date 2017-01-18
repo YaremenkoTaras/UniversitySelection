@@ -36,6 +36,7 @@
     <br>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="changeApplicantInfo"/>
+        <input type="hidden" name="additional" value="edit">
         <input type="submit" value="${content.getString("applicant.button.edit")}">
     </form>
 

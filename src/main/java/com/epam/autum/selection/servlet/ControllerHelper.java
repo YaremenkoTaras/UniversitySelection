@@ -23,7 +23,7 @@ public class ControllerHelper {
         commands.put("addApplication", new CommandAddApplication());
         commands.put("addMark", new CommandAddMark());
         commands.put("showApplicant",new CommandShowApplicant());
-
+        commands.put("changeApplicantInfo", new CommandChangeApplicant());
     }
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));

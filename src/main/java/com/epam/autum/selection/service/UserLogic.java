@@ -62,6 +62,24 @@ public class UserLogic {
         }
         return user;
     }
+    public static boolean isEmailFree(String email) throws LogicException {
+        boolean free = false;
+        Optional<WrapperConnection> optConnection = Optional.empty();
+        try {
+            optConnection = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
+            IUserDAO userDAO = DaoFactory.createUserDAO(connection);
+            free = userDAO.isEmailFree(email);
+        } catch (SQLException e) {
+            throw new LogicException("DB connection error: ", e);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        } finally {
+            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
+        }
+        return free;
+
+    }
 
     /**
      * Checks if passwords match.
@@ -107,7 +125,7 @@ public class UserLogic {
      * @return result of user validation and editing
      * @throws LogicException if any exceptions occurred on the DAO or SQL layer
      */
-    private static ValidationResult editUser(User user) throws LogicException {
+    public static ValidationResult editUser(User user) throws LogicException {
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
         if (!validateName(user.getName())) {
             result = ValidationResult.NAME_INCORRECT;
@@ -120,7 +138,6 @@ public class UserLogic {
                 WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
                 IUserDAO userDAO = DaoFactory.createUserDAO(connection);
                 userDAO.update(user);
-
                 result = ValidationResult.ALL_RIGHT;
             } catch (SQLException e) {
                 throw new LogicException("DB connection error: ", e);
@@ -207,7 +224,6 @@ public class UserLogic {
                     user.setPassword(password);
                     boolean registered = userDAO.create(user);
                     result = registered ? ValidationResult.ALL_RIGHT : ValidationResult.UNKNOWN_ERROR;
-
                 } else {
                     result = ValidationResult.EMAIL_NOT_UNIQUE;
                 }

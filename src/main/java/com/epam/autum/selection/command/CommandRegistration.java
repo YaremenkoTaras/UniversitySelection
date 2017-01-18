@@ -21,13 +21,7 @@ public class CommandRegistration implements ICommand {
 
     private static Logger log = LogManager.getLogger(CommandRegistration.class);
 
-    private static final String PARAMETER_FIRST_NAME = "firstName";
-    private static final String PARAMETER_LAST_NAME = "lastName";
-    private static final String PARAMETER_ADDRESS = "address";
-    private static final String PARAMETER_SEX = "sex";
-    private static final String PARAMETER_PHONE = "phone";
-    private static final String PARAMETER_EMAIL = "email";
-    private static final String PARAMETER_PASSWORD = "password_one";
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,9 +71,9 @@ public class CommandRegistration implements ICommand {
 
     private Date getDateOfBirth(HttpServletRequest request){
         StringBuilder builder = new StringBuilder();
-        builder.append(request.getParameter("year") + "-");
-        builder.append(request.getParameter("month") + "-");
-        builder.append(request.getParameter("day"));
+        builder.append(request.getParameter(PARAMETER_YEAR) + "-");
+        builder.append(request.getParameter(PARAMETER_MONTH) + "-");
+        builder.append(request.getParameter(PARAMETER_DAY));
         return Date.valueOf(builder.toString());
     }
 }

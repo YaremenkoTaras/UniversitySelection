@@ -10,10 +10,6 @@ import java.io.IOException;
  */
 public interface ICommand {
 
-    String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException;
-
-
     String ID = "id";
     String USER = "user";
     String EMAIL = "email";
@@ -31,5 +27,22 @@ public interface ICommand {
     String LOW_MARK = "lowmark";
     String SUBJECT = "subject";
     String DESCRIPTION = "description";
+    String ADDITIONAL = "additional";
+
+    /*Paramrters for user information*/
+    String PARAMETER_FIRST_NAME = "firstName";
+    String PARAMETER_LAST_NAME = "lastName";
+    String PARAMETER_ADDRESS = "address";
+    String PARAMETER_SEX = "sex";
+    String PARAMETER_PHONE = "phone";
+    String PARAMETER_EMAIL = "email";
+    String PARAMETER_PASSWORD = "password_one";
+    String PARAMETER_PASSWORD_TWO = "password_two";
+    String PARAMETER_YEAR  = "year";
+    String PARAMETER_MONTH = "month";
+    String PARAMETER_DAY   = "day";
+
+    String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException;
 
 }
