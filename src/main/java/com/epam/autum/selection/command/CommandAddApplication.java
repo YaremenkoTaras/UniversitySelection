@@ -28,17 +28,16 @@ public class CommandAddApplication implements ICommand {
         }
         String page = null;
         HttpSession session = request.getSession();
-
+        String description = "";
         Integer userID    = null;
         Integer facultyID = null;
         try {
             facultyID = Integer.parseInt(request.getParameter(ID));
             userID = ((User) session.getAttribute(USER)).getId();
+            description = request.getParameter(DESCRIPTION);
         }catch (Exception e) {
             log.error(e);
         }
-        String description = "Description";
-        String message;
         ValidationResult result;
         try {
             result = ApplicationLogic.checkMarkForFaculty(userID,facultyID);
@@ -46,7 +45,7 @@ public class CommandAddApplication implements ICommand {
                 case ALL_RIGHT:
                     result = ApplicationLogic.addApplication(userID,facultyID,description);
                     if (result == ValidationResult.ALL_RIGHT)
-                        message = "";
+                        log.info("Application add:" + result);
                     break;
                 case MISSING_MARK:
                     request.setAttribute(MISSING_MARK, true); break;

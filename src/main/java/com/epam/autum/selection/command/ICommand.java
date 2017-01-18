@@ -30,5 +30,6 @@ public interface ICommand {
     String MISSING_MARK = "missingmark";
     String LOW_MARK = "lowmark";
     String SUBJECT = "subject";
+    String DESCRIPTION = "description";
 
 }

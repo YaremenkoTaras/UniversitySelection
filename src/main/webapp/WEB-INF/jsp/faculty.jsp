@@ -13,37 +13,65 @@
 </head>
 <header>
     <h3>${faculty.name}</h3>
-    <h4>${content.getString("faculty.total")}:  ${faculty.numberOfStudent}</h4>
+    <h4>${content.getString("faculty.total")}: ${faculty.numberOfStudent}</h4>
 
 </header>
 <body>
 
-<div class="container">
-    <form>
-        <table border="1" cellspacing="0" cellpadding="2">
-            <tr>
-                <td>${content.getString("faculty.subject")}</td>
-                <td>${content.getString("faculty.min_mark")}</td>
-            </tr>
-            <c:forEach var="fsub" items="${facultysubjects}">
+
+<form>
+    <table border="1" cellspacing="0" cellpadding="2">
+        <tr>
+            <td>${content.getString("faculty.subject")}</td>
+            <td>${content.getString("faculty.min_mark")}</td>
+        </tr>
+        <c:forEach var="fsub" items="${facultysubjects}">
             <tr>
                 <td>${fsub.subjectID}</td>
                 <td>${fsub.minMark}</td>
-            </c:forEach>
-    </form>
-</div>
-
-<div class="container">
-    <form>
-        <table border="1" cellspacing="0" cellpadding="2">
-            <tr>
-                <td>${content.getString("application.applicant")}</td>
-                <td>${content.getString("application.overall")}</td>
-                <td>${content.getString("application.date")}</td>
-                <td>${content.getString("application.status")}</td>
-                <td>${content.getString("application.description")}</td>
             </tr>
-            <c:forEach var="app" items="${applications}">
+        </c:forEach>
+    </table>
+</form>
+
+
+<form>
+    <c:if test="${user.roleID == 2 && userapp == null && missingmark == null && lowmark == null}">
+        <div class="container">
+            <form action="/Controller" method="post">
+                <input type="hidden" name="command" value="addApplication"/>
+                <input type="hidden" name="id" value="${faculty.id}"/>
+                <input type="text" name="description" value="${description}" placeholder="Few words about yourself"
+                       id="form1" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z\s]+$">
+                <input type="submit" value="${content.getString("faculty.add_application")}">
+            </form>
+        </div>
+    </c:if>
+
+    <c:if test="${missingmark != null}">
+        <h4>${content.getString("faculty.missmark")}</h4>
+    </c:if>
+
+    <c:if test="${lowmark != null}">
+        <h4>${content.getString("faculty.lowmark")}</h4>
+    </c:if>
+
+    <c:if test="${user.roleID == 2 && userapp != null}">
+        <h4>${content.getString("faculty.user_application")} ${userapp.date}</h4>
+    </c:if>
+</form>
+
+
+<form>
+    <table border="1" cellspacing="0" cellpadding="2">
+        <tr>
+            <td>${content.getString("application.applicant")}</td>
+            <td>${content.getString("application.overall")}</td>
+            <td>${content.getString("application.date")}</td>
+            <td>${content.getString("application.status")}</td>
+            <td>${content.getString("application.description")}</td>
+        </tr>
+        <c:forEach var="app" items="${applications}">
             <tr>
                 <td>${app.userID}</td>
                 <td>${app.overall}</td>
@@ -51,33 +79,15 @@
                 <td>${app.statusID}</td>
                 <td>${app.description}</td>
             </tr>
-            </c:forEach>
-    </form>
-</div>
-<br>
+        </c:forEach>
+    </table>
+</form>
 
+<form name="back_faculties" action="/Controller" method="post">
+    <input type="hidden" name="command" value="showFaculties">
+    <button type="submit">${content.getString("faculty.button.back")}</button>
+</form>
 
-<c:if test="${user.roleID == 2 && userapp == null && missingmark == null && lowmark == null}">
-    <div class="container">
-        <form action="/Controller" method="post">
-            <input type="hidden" name="command" value="addApplication"/>
-            <input type="hidden" name="id" value="${faculty.id}"/>
-            <input type="submit" value="${content.getString("faculty.add_application")}">
-        </form>
-    </div>
-</c:if>
-
-<c:if test="${missingmark != null}">
-    <h4>${content.getString("faculty.missmark")}</h4>
-</c:if>
-
-<c:if test="${lowmark != null}">
-    <h4>${content.getString("faculty.lowmark")}</h4>
-</c:if>
-
-<c:if test="${user.roleID == 2 && userapp != null}">
-    <h4>${content.getString("faculty.user_application")} ${userapp.date}</h4>
-</c:if>
 
 </body>
 </html>
