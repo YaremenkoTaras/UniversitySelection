@@ -13,7 +13,23 @@ import java.io.IOException;
 public class CommandRegister implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute(ID,2);
+
+        loadAttribute(request, response);
+
         return PageConfigurator.getConfigurator().getPage(PageConfigurator.REGISTRATION_PAGE);
+    }
+
+    private void loadAttribute(HttpServletRequest request, HttpServletResponse response){
+        String parameter = request.getParameter(ADDITIONAL);
+        switch (parameter){
+            case "user":
+                request.setAttribute(ID,2);
+                break;
+            case "admin":
+
+                break;
+            default:
+                break;
+        }
     }
 }

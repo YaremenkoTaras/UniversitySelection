@@ -36,6 +36,7 @@
     <br>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="register"/>
+        <input type="hidden" name="additional" value="user">
         <input type="submit" value="Go to Registation">
     </form>
 

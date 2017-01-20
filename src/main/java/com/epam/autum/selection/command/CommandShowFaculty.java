@@ -12,10 +12,8 @@ import com.epam.autum.selection.service.SubjectLogic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,16 +24,13 @@ public class CommandShowFaculty implements ICommand {
     private static Logger log = LogManager.getLogger(CommandShowFaculty.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
-
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             loadAttributes(request, response);
         } catch (LogicException e) {
             log.error(e);
         }
-
-        return page;
+        return PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
     }
 
     private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
@@ -45,14 +40,13 @@ public class CommandShowFaculty implements ICommand {
         int userID = user.getId();
 
         Faculty faculty = FacultyLogic.findFacultyByID(id);
-        List<FacultySubject> subjects= SubjectLogic.getSubjectsByFaculty(id);
+        List<FacultySubject> subjects = SubjectLogic.getSubjectsByFaculty(id);
         List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
         Application application = ApplicationLogic.findApplication(userID, id);
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(FACULTY_SUBJECTS, subjects);
         request.setAttribute(APPLICATIONS, applications);
-        request.setAttribute(USER_APPLICATION,application);
-
+        request.setAttribute(USER_APPLICATION, application);
     }
 }

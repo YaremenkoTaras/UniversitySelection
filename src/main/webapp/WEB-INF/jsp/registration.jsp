@@ -10,7 +10,11 @@
 <header>
     <div class="container">
         <h3>${content.getString("registration")}</h3>
-        <h2>${register}</h2>
+        <c:if test="${register != null}">
+            <h2>${register}</h2>
+
+        </c:if>
+
     </div>
 </header>
 <body class="body">
