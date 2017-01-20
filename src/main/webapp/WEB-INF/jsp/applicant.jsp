@@ -31,6 +31,7 @@
     </table>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="addMark"/>
+        <input type="hidden" name="additional" value="show">
         <input type="submit" value="${content.getString("applicant.button.add_mark")}">
     </form>
     <br>

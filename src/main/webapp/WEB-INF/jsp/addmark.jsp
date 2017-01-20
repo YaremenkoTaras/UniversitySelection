@@ -40,13 +40,13 @@
            value="" name="mark" id="form2" required pattern="[0-9]{3}">
     </input>
     <input type="hidden" name="command" value="addMark"/>
-    <input type="hidden" name="add" value="true"/>
+    <input type="hidden" name="additional" value="add"/>
     <button name="submit" id="add_submit_btn" class="btn col-xs-4">${content.getString("addmark.add")}</button>
 </form>
 <br>
 <form method="POST" action="Controller">
     <input type="hidden" name="command" value="showApplicant"/>
-    <button name="submit">${content.getString("applicant.button.back")}</button>
+    <button name="submit">${content.getString("button.back_to_profile")}</button>
 </form>
 
 </body>

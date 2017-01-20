@@ -26,48 +26,52 @@ public class CommandAddMark implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String parameter = request.getParameter("add");
-        System.err.println("\n\n"+parameter+"\n\n");
-
-        try {
-            if(parameter != null && parameter.equals("true")) {
+        String parameter = request.getParameter("additional");
+        switch (parameter){
+            case "add":
                 int subjectID = Integer.parseInt(request.getParameter(SUBJECT));
                 int userID = ((User) request.getSession().getAttribute(USER)).getId();
                 int mark = Integer.parseInt(request.getParameter(MARK));
-                MarkLogic.addMark(userID, subjectID, mark);
-            }
-            loadAttributes(request,response);
-        } catch (LogicException e) {
-            log.error(e);
-        } catch (Exception e){
-            log.error(e);
+                try {
+                    MarkLogic.addMark(userID, subjectID, mark); //Try to make new method for this? clear code
+                } catch (LogicException e) {
+                    log.error(e);
+                }
+                loadAttributes(request, response);
+                break;
+            case "show":
+                loadAttributes(request, response);
+                break;
+            default:
+                break;
         }
-
         return PageConfigurator.getConfigurator().getPage(PageConfigurator.ADD_MARK_PAGE);
     }
 
-    private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
+    private void loadAttributes(HttpServletRequest request, HttpServletResponse response){
+        int userID = ((User) request.getSession().getAttribute(USER)).getId();
+        List<Subject> subjectList = null;
+        List<ApplicantMark> marks = null;
+        List<Subject> subjects = new ArrayList<>();
 
-        int userID = ((User)request.getSession().getAttribute(USER)).getId();
-
-        List<Subject> subjectList = SubjectLogic.getSubjects();
-        List<ApplicantMark> marks = MarkLogic.getMarksByUser(userID);
-        List<Subject> subjects  = new ArrayList<>();
+        try {
+            subjectList = SubjectLogic.getSubjects();
+            marks = MarkLogic.getMarksByUser(userID);
+        } catch (LogicException e) {
+            log.error(e);
+        }
         for (Subject subj : subjectList) {
             boolean res = false;
             for (ApplicantMark mark : marks) {
-                if (subj.getId() == mark.getSubjectID()){
+                if (subj.getId() == mark.getSubjectID()) {
                     res = true;
                 }
             }
-            if (!res){
+            if (!res) {
                 subjects.add(subj);
             }
         }
-        request.setAttribute(MARKS,marks);
-        request.setAttribute(SUBJECTS,subjects);
-        System.out.println(subjectList);
-        System.out.println(subjects);
-
+        request.setAttribute(MARKS, marks);
+        request.setAttribute(SUBJECTS, subjects);
     }
 }

@@ -18,11 +18,11 @@ public class ControllerHelper {
         commands.put("login", new CommandLogin());
         commands.put("register", new CommandRegister());
         commands.put("registration", new CommandRegistration());
+        commands.put("showApplicant",new CommandShowApplicant());
         commands.put("showFaculties", new CommandShowFaculties());
         commands.put("showFaculty", new CommandShowFaculty());
         commands.put("addApplication", new CommandAddApplication());
         commands.put("addMark", new CommandAddMark());
-        commands.put("showApplicant",new CommandShowApplicant());
         commands.put("changeApplicantInfo", new CommandChangeApplicant());
         commands.put("logout", new CommandLogout());
     }

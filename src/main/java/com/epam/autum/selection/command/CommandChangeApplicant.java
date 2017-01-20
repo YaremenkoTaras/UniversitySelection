@@ -40,7 +40,6 @@ public class CommandChangeApplicant implements ICommand {
 
     private void loadEditAttribute(HttpServletRequest request, HttpServletResponse response) {
         User user = (User)request.getSession().getAttribute(USER);
-        System.out.println(user);
         request.setAttribute(PARAMETER_ADDRESS, user.getAddress());
         request.setAttribute(PARAMETER_EMAIL, user.getEmail());
         request.setAttribute(PARAMETER_PHONE, user.getPhone());

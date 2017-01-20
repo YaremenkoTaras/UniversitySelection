@@ -59,9 +59,15 @@
         <input type="hidden" name="command" value="changeApplicantInfo"/>
         <input type="hidden" name="additional" value="submit">
         <button name="submit" id="reg_submit_btn"
-                class="btn col-xs-4">${content.getString("change.confirm")}</button>
+                class="btn col-xs-4">${content.getString("change.button.confirm")}</button>
 
     </form>
 </div>
+<br>
+<form class="container" action="/Controller" method="post">
+    <input type="hidden" name="command" value="showApplicant">
+    <button type="submit">${content.getString("button.back_to_profile")}</button>
+</form>
+
 </body>
 </html>

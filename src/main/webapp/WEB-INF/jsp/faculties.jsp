@@ -17,10 +17,19 @@
     </div>
 </header>
 <body>
-<c:forEach var="faculty" items="${faculties}">
-    <a href="Controller?command=showFaculty&id=${faculty.id}">
-        <div class="facultyvalue"> ${faculty.name} </div>
-    </a>
-</c:forEach>
+<div>
+    <form class="container">
+        <c:forEach var="faculty" items="${faculties}">
+            <a href="Controller?command=showFaculty&id=${faculty.id}">
+                <div class="facultyvalue"> ${faculty.name} </div>
+            </a>
+        </c:forEach>
+    </form>
+</div>
+<br>
+<form class="container" action="/Controller" method="post">
+    <input type="hidden" name="command" value="showApplicant">
+    <button type="submit">${content.getString("button.back_to_profile")}</button>
+</form>
 </body>
 </html>

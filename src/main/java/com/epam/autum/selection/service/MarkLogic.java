@@ -20,7 +20,7 @@ import java.util.Optional;
 public class MarkLogic {
 
     private static final int MIN_MARK = 0;
-    private static final int MAX_MARK = 201;
+    private static final int MAX_MARK = 200;
     private static final String REGEXP_MARK = "(\\d){1,3}";
 
     public static ValidationResult addMark(int userID, int subjectID, int mark) throws LogicException {
@@ -47,7 +47,7 @@ public class MarkLogic {
     }
 
     private static boolean isValid(int mark){
-        return (mark > MIN_MARK && mark < MAX_MARK && Validator.validate(Integer.toString(mark),REGEXP_MARK));
+        return (mark > MIN_MARK && mark <= MAX_MARK && Validator.validate(Integer.toString(mark),REGEXP_MARK));
     }
 
     public static Optional<ApplicantMark> getMark(int id) throws LogicException {
