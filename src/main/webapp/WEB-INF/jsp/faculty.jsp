@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>${content.getString("faculty")}: ${faculty.name}</title>
+    <title>${content.getString("faculty")}: ${faculty.name} ${content.getString("main.title")}</title>
 </head>
 <header>
     <h3>${faculty.name}</h3>

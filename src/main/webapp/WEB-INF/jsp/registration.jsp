@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${content.getString("registration")}</title>
+    <title>${content.getString("registration")} ${content.getString("main.title")}</title>
 
 </head>
 <header>

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edit Admin</title>
+    <title>Edit Admin ${content.getString("main.title")}</title>
 </head>
 <body>
 Edit admin page
