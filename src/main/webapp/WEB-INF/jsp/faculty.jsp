@@ -14,12 +14,10 @@
 <header>
     <h3>${faculty.name}</h3>
     <h4>${content.getString("faculty.total")}: ${faculty.numberOfStudent}</h4>
-
 </header>
+
 <body>
-
-
-<form>
+<form name="form_faculty_subjects">
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>${content.getString("faculty.subject")}</td>
@@ -35,7 +33,7 @@
 </form>
 
 
-<form>
+<form name="form_add_application">
     <c:if test="${user.roleID == 2 && userapp == null && missingmark == null && lowmark == null}">
         <div class="container">
             <form action="/Controller" method="post">
@@ -62,7 +60,7 @@
 </form>
 
 
-<form>
+<form name="form_proces_applications">
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>${content.getString("application.applicant")}</td>

@@ -25,15 +25,45 @@ public class CommandShowFaculty implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTIES_PAGE);
         try {
-            loadAttributes(request, response);
+            int userID = ((User)request.getSession().getAttribute(USER)).getId();
+            switch (userID){
+                case 1:
+                    loadAdminAttributes(request, response);
+                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_COMMISSION_PAGE);
+                    break;
+
+                case 2:
+                    loadUserAttributes(request, response);
+                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
+                    break;
+
+                case 3:
+                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.INDEX_PAGE);
+                    break;
+
+                default:
+                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.INDEX_PAGE);
+                    break;
+            }
         } catch (LogicException e) {
             log.error(e);
         }
-        return PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
+        return page;
     }
 
-    private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
+    private void loadAdminAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
+        int id = Integer.parseInt(request.getParameter(ID));
+
+        Faculty faculty = FacultyLogic.findFacultyByID(id);
+        List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
+
+        request.setAttribute(FACULTY, faculty);
+        request.setAttribute(APPLICATIONS, applications);
+    }
+
+    private void loadUserAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
 
         int id = Integer.parseInt(request.getParameter(ID));
         User user = (User) request.getSession().getAttribute(USER);

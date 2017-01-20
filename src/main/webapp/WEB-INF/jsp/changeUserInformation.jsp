@@ -9,13 +9,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>${content.getString("change.applicant")} ${content.getString("main.title")}</title>
+    <title>${content.getString("change.user")} ${content.getString("main.title")}</title>
 </head>
 <body>
 
 <div class="container">
     <form action="Controller" method="POST">
-        <h3>${content.getString("change.applicant")} : ${user.name}</h3>
+        <h3>${content.getString("change.user")} : ${user.name}</h3>
 
         <div class="row">
 
@@ -56,16 +56,20 @@
                 <label class="active" for="form10">${content.getString("change.new_password")}</label>
             </div>
         </div>
-        <input type="hidden" name="command" value="changeApplicantInfo"/>
+        <input type="hidden" name="command" value="changeUserInfo"/>
         <input type="hidden" name="additional" value="submit">
         <button name="submit" id="reg_submit_btn"
                 class="btn col-xs-4">${content.getString("change.button.confirm")}</button>
-
     </form>
 </div>
 <br>
 <form class="container" action="/Controller" method="post">
-    <input type="hidden" name="command" value="showApplicant">
+    <c:if test="${user.roleID == 2}">
+        <input type="hidden" name="command" value="showApplicant">
+    </c:if>
+    <c:if test="${user.roleID == 1}">
+        <input type="hidden" name="command" value="showAdmin">
+    </c:if>
     <button type="submit">${content.getString("button.back_to_profile")}</button>
 </form>
 

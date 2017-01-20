@@ -19,11 +19,13 @@ public class ControllerHelper {
         commands.put("register", new CommandRegister());
         commands.put("registration", new CommandRegistration());
         commands.put("showApplicant",new CommandShowApplicant());
+        commands.put("showAdmin",new CommandShowAdmin());
         commands.put("showFaculties", new CommandShowFaculties());
         commands.put("showFaculty", new CommandShowFaculty());
+        commands.put("showApplication", new CommandShowApplication());
         commands.put("addApplication", new CommandAddApplication());
         commands.put("addMark", new CommandAddMark());
-        commands.put("changeApplicantInfo", new CommandChangeApplicant());
+        commands.put("changeUserInfo", new CommandChangeUser());
         commands.put("logout", new CommandLogout());
     }
     public ICommand getCommand(HttpServletRequest request) {

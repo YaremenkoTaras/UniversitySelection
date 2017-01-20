@@ -13,26 +13,6 @@
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>error</servlet-name>
-        <jsp-file>/WEB-INF/jsp/error.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>error</servlet-name>
-        <url-pattern>/error</url-pattern>
-    </servlet-mapping>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/error</location>
-    </error-page>
-    <error-page>
-        <error-code>403</error-code>
-        <location>/error</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error</location>
-    </error-page>
 
 
     <filter>

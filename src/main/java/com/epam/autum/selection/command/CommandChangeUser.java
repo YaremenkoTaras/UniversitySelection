@@ -16,8 +16,8 @@ import java.io.IOException;
 /**
  * Created by Tapac on 18.01.2017.
  */
-public class CommandChangeApplicant implements ICommand {
-    private static Logger log = LogManager.getLogger(CommandChangeApplicant.class);
+public class CommandChangeUser implements ICommand {
+    private static Logger log = LogManager.getLogger(CommandChangeUser.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class CommandChangeApplicant implements ICommand {
         switch (add) {
             case "edit":
                 loadEditAttribute(request, response);
-                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_APPLICANT_INFORMATION_PAGE);
+                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_USER_INFORMATION_PAGE);
                 break;
             case "submit":
                 page = updateUser(request, response);
@@ -83,11 +83,11 @@ public class CommandChangeApplicant implements ICommand {
             case EMAIL_NOT_UNIQUE:
                 loadEditAttribute(request, response);
                 request.setAttribute(DESCRIPTION, ValidationResult.EMAIL_NOT_UNIQUE);
-                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_APPLICANT_INFORMATION_PAGE);
+                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_USER_INFORMATION_PAGE);
                 break;
             default:
                 loadEditAttribute(request, response);
-                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_APPLICANT_INFORMATION_PAGE);
+                page = PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_USER_INFORMATION_PAGE);
                 break;
         }
         return page;

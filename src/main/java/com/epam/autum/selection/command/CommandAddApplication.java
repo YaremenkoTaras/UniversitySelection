@@ -22,14 +22,14 @@ public class CommandAddApplication implements ICommand {
 
     public String execute(HttpServletRequest request, HttpServletResponse response){
 
-        String page = null;
+        String page;
         HttpSession session = request.getSession();
         String description = "";
         Integer userID    = null;
         Integer facultyID = null;
         try {
-            facultyID = Integer.parseInt(request.getParameter(ID));
             userID = ((User) session.getAttribute(USER)).getId();
+            facultyID = Integer.parseInt(request.getParameter(ID));
             description = request.getParameter(DESCRIPTION);
         }catch (Exception e) {
             log.error(e);

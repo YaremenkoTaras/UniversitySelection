@@ -36,9 +36,9 @@
     </form>
     <br>
     <form method="POST" action="Controller">
-        <input type="hidden" name="command" value="changeApplicantInfo"/>
+        <input type="hidden" name="command" value="changeUserInfo"/>
         <input type="hidden" name="additional" value="edit">
-        <input type="submit" value="${content.getString("applicant.button.edit")}">
+        <input type="submit" value="${content.getString("button.edit")}">
     </form>
 
 </form>
@@ -71,7 +71,7 @@
 
     <form method="post" action="/Controller">
         <input type="hidden" name="command" value="logout"/>
-        <input type="submit" value="${content.getString("applicant.button.logout")}">
+        <input type="submit" value="${content.getString("button.logout")}">
     </form>
 
 </form>

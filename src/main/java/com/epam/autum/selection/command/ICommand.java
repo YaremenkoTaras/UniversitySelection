@@ -17,10 +17,11 @@ public interface ICommand {
     String REGISTER = "register";
     String MARKS = "marks";
     String MARK = "mark";
+    String APPLICANT = "applicant";
     String APPLICATIONS = "applications";
+    String USER_APPLICATION = "userapp";
     String FACULTIES = "faculties";
     String FACULTY = "faculty";
-    String USER_APPLICATION = "userapp";
     String FACULTY_SUBJECTS = "facultysubjects";
     String SUBJECTS = "subjects";
     String MISSING_MARK = "missingmark";
@@ -28,6 +29,8 @@ public interface ICommand {
     String SUBJECT = "subject";
     String DESCRIPTION = "description";
     String ADDITIONAL = "additional";
+
+    String MESSAGE = "message";
 
     /*Paramrters for user information*/
     String PARAMETER_FIRST_NAME = "firstName";
