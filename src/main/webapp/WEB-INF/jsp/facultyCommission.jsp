@@ -77,7 +77,7 @@
     <button type="submit">${content.getString("faculty.button.back")}</button>
 </form>
 <form class="container" action="/Controller" method="post">
-    <input type="hidden" name="command" value="showApplicant">
+    <input type="hidden" name="command" value="showAdmin">
     <button type="submit">${content.getString("button.back_to_profile")}</button>
 </form>
 

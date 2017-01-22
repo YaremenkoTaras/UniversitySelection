@@ -10,7 +10,7 @@ public class PageConfigurator {
 	public static final String APPLICATION_PAGE = "APPLICATION";
 	public static final String GUEST_PAGE = "GUEST";
 	public static final String ERROR_PAGE = "ERROR";
-	public static final String FACULTY_PAGE = "FACULTY";
+	public static final String FACULTY_ADMISSION_PAGE = "FACULTY_ADMISSION";
 	public static final String FACULTY_COMMISSION_PAGE = "FACULTY_COMMISSION";
 	public static final String FACULTIES_PAGE = "FACULTIES";
 	public static final String REGISTRATION_PAGE = "REGISTRATION";

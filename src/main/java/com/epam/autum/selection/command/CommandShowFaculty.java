@@ -36,7 +36,7 @@ public class CommandShowFaculty implements ICommand {
 
                 case 2:
                     loadUserAttributes(request, response);
-                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_PAGE);
+                    page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_ADMISSION_PAGE);
                     break;
 
                 case 3:

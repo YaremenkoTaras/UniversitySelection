@@ -28,7 +28,12 @@
 </div>
 <br>
 <form class="container" action="/Controller" method="post">
-    <input type="hidden" name="command" value="showApplicant">
+    <c:if test="${user.roleID == 2}">
+        <input type="hidden" name="command" value="showApplicant">
+    </c:if>
+    <c:if test="${user.roleID == 1}">
+        <input type="hidden" name="command" value="showAdmin">
+    </c:if>
     <button type="submit">${content.getString("button.back_to_profile")}</button>
 </form>
 </body>
