@@ -60,7 +60,8 @@
 </form>
 
 
-<form name="form_proces_applications">
+<form name="form_accepted_applications">
+    <h4>${content.getString("application.accepted")}</h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>${content.getString("application.applicant")}</td>
@@ -70,13 +71,39 @@
             <td>${content.getString("application.description")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
-            <tr>
-                <td>${app.userID}</td>
-                <td>${app.overall}</td>
-                <td>${app.date}</td>
-                <td>${app.statusID}</td>
-                <td>${app.description}</td>
-            </tr>
+            <c:if test="${app.statusID == 1}">
+                <tr>
+                    <td>${app.userID}</td>
+                    <td>${app.overall}</td>
+                    <td>${app.date}</td>
+                    <td>${app.statusID}</td>
+                    <td>${app.description}</td>
+                </tr>
+            </c:if>
+        </c:forEach>
+    </table>
+</form>
+
+<form name="form_process_applications">
+    <h4>${content.getString("application.process")}</h4>
+    <table border="1" cellspacing="0" cellpadding="2">
+        <tr>
+            <td>${content.getString("application.applicant")}</td>
+            <td>${content.getString("application.overall")}</td>
+            <td>${content.getString("application.date")}</td>
+            <td>${content.getString("application.status")}</td>
+            <td>${content.getString("application.description")}</td>
+        </tr>
+        <c:forEach var="app" items="${applications}">
+            <c:if test="${app.statusID == 2}">
+                <tr>
+                    <td>${app.userID}</td>
+                    <td>${app.overall}</td>
+                    <td>${app.date}</td>
+                    <td>${app.statusID}</td>
+                    <td>${app.description}</td>
+                </tr>
+            </c:if>
         </c:forEach>
     </table>
 </form>

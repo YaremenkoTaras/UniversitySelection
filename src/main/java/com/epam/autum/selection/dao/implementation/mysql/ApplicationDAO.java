@@ -40,6 +40,8 @@ public class ApplicationDAO implements IApplicationDAO {
     private static final String SELECT_BY_ID = "SELECT date,description,overall,faculty_id,user_id,application_status_id FROM application WHERE application_id=?";
     private static final String SELECT_BY_USER_FACULTY = "SELECT application_id,date,description,overall,application_status_id FROM application WHERE user_id=? AND faculty_id=?";
 
+    private static final String UPDATE_STATUS = "UPDATE application SET application_status_id=? WHERE application_id=?";
+
     private static final String INSERT_APPLICATION = "INSERT INTO application(date,description,overall,faculty_id,user_id,application_status_id) VALUES(?,?,?,?,?,2)";
 
     private static final String DELETE_BY_ID = "DELETE FROM application WHERE application_id=?";
@@ -218,7 +220,19 @@ public class ApplicationDAO implements IApplicationDAO {
 
     @Override
     public boolean update(Application entity) throws DAOException {
-        throw new UnsupportedOperationException();
+        boolean update = false;
+        try (PreparedStatement st = connection.prepareStatement(UPDATE_STATUS)) {
+            st.setInt(1, entity.getStatusID());
+            st.setInt(2, entity.getId());
+            int updated = st.executeUpdate();
+            if (updated > 0) {
+                update = true;
+                log.info("Application id=" + entity.getId() + " updated");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return update;
     }
 
 }

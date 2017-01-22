@@ -27,6 +27,7 @@ public class ControllerHelper {
         commands.put("addMark", new CommandAddMark());
         commands.put("changeUserInfo", new CommandChangeUser());
         commands.put("logout", new CommandLogout());
+        commands.put("processApplication", new CommandProcessApplication());
     }
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));

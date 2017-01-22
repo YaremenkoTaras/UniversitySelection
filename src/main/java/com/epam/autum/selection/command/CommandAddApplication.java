@@ -19,10 +19,15 @@ public class CommandAddApplication implements ICommand {
     private static Logger log = LogManager.getLogger(CommandAddApplication.class);
 
     @Override
-
     public String execute(HttpServletRequest request, HttpServletResponse response){
 
-        String page;
+        loadAttribute(request, response);
+
+        String page = (new CommandShowFaculty()).execute(request,response);
+        return page;
+    }
+
+    private void loadAttribute(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
         String description = "";
         Integer userID    = null;
@@ -54,7 +59,5 @@ public class CommandAddApplication implements ICommand {
         } catch (LogicException e) {
             log.error(e);
         }
-        page = (new CommandShowFaculty()).execute(request,response);
-        return page;
     }
 }

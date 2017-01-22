@@ -16,8 +16,8 @@
     <h4>${content.getString("faculty.total")}: ${faculty.numberOfStudent}</h4>
 </header>
 
-<form name="form_proces_applications">
-
+<form name="form_accepted_applications">
+    <h4>${content.getString("application.accepted")}</h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>${content.getString("application.applicant")}</td>
@@ -40,7 +40,8 @@
     </table>
 </form>
 
-<form name="form_proces_applications">
+<form name="form_process_applications">
+    <h4>${content.getString("application.process")}</h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>${content.getString("application.applicant")}</td>
@@ -48,7 +49,7 @@
             <td>${content.getString("application.date")}</td>
             <td>${content.getString("application.status")}</td>
             <td>${content.getString("application.description")}</td>
-            <td></td>
+            <td>${content.getString("faculty.commission.watch")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
             <c:if test="${app.statusID == 2}">
@@ -61,6 +62,7 @@
                     <td>
                         <form action="/Controller" method="post">
                             <input type="hidden" name="command" value="showApplication">
+                            <input type="hidden" name="additional" value="${app.id}">
                             <input type="submit" value="${content.getString("faculty.commission.show_app")}">
                         </form>
                     </td>

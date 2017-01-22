@@ -39,7 +39,6 @@ public class UserDAO implements IUserDAO{
     private static final String SELECT_BY_ID = "SELECT name,sex,birth,phone,address,email,password,user_role_id FROM user WHERE user_id=?";
     private static final String SELECT_USER_BY_EMAIL = "SELECT user_id,name,password,sex,birth,address,phone,user_role_id FROM user WHERE email=?";
     private static final String SELECT_PASSWORD_BY_EMAIL = "SELECT password FROM user WHERE email=?";
-    private static final String SELECT_ID_BY_EMAIL = "SELECT user_id FROM user WHERE email=?";
 
     private static final String INSERT_USER = "INSERT INTO user(name,sex,phone,address,email,password,user_role_id) VALUES(?,?,?,?,?,?,2)";
 
@@ -134,10 +133,8 @@ public class UserDAO implements IUserDAO{
 
     @Override
     public boolean update(User entity) throws DAOException {
-        //User user = findEntityById(entity.getId()).get();
-        String sqlQuery = UPDATE_USER;
         boolean update = false;
-        try (PreparedStatement st = connection.prepareStatement(sqlQuery)) {
+        try (PreparedStatement st = connection.prepareStatement(UPDATE_USER)) {
             st.setString(1, entity.getName());
             st.setString(2, entity.getSex());
             st.setDate(3, entity.getBirth());

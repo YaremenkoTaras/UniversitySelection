@@ -14,7 +14,7 @@
 
 <body>
 
-Admin main page
+<h3>${content.getString("admin.header")} - ${user.name}</h3>
 
 <br>
 
@@ -30,6 +30,16 @@ Admin main page
     <input type="hidden" name="additional" value="edit">
     <input type="submit" value="${content.getString("button.edit")}">
 </form>
+
+<br>
+
+<form action="/Controller" method="post">
+    <input type="hidden" name="command" value="register">
+    <input type="hidden" name="additional" value="admin">
+    <button type="submit">${content.getString("admin.button.create_admin")}</button>
+</form>
+
+<br>
 
 <form method="post" action="/Controller">
     <input type="hidden" name="command" value="logout"/>

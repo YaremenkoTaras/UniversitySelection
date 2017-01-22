@@ -202,5 +202,64 @@ public class ApplicationLogic {
         return applications;
     }
 
+    public static ValidationResult acceptApplication(int applicationID) throws LogicException {
+        ValidationResult result = ValidationResult.UNKNOWN_ERROR;
+
+        Application app = findApplication(applicationID);
+        List<Application> applicationList = ApplicationLogic.findApplicationsByUser(app.getUserID());
+
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+
+        try {
+            connectionOptional = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
+            connection.setAutoCommit(false);
+            boolean updated = true;
+            IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
+            for(Application application : applicationList){
+                if(application.getId() == applicationID) {
+                    application.setStatusID(1);
+                }
+                else {
+                    application.setStatusID(3);
+                }
+                updated = (applicationDAO.update(application) && updated);
+            }
+            connection.setAutoCommit(true);
+            if (updated)
+                result = ValidationResult.ALL_RIGHT;
+        } catch (SQLException | DAOException e) {
+            throw new LogicException(e);
+        } finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
+        }
+        return result;
+    }
+
+    public static ValidationResult declineApplication(int applicationID) throws LogicException {
+        ValidationResult result = ValidationResult.UNKNOWN_ERROR;
+
+        Application app = findApplication(applicationID);
+
+        Optional<WrapperConnection> connectionOptional = Optional.empty();
+        try {
+            connectionOptional = ConnectionPool.getInstance().takeConnection();
+            WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
+            IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
+            app.setStatusID(3);
+            boolean updated = applicationDAO.update(app);
+            if (updated)
+                result = ValidationResult.ALL_RIGHT;
+
+        } catch (SQLException | DAOException e) {
+            throw new LogicException(e);
+        } finally {
+            connectionOptional.ifPresent(ConnectionPool.getInstance()::returnConnection);
+        }
+        return result;
+    }
+
+
+
 
 }

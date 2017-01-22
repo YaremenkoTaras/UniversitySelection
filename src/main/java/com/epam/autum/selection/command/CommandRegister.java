@@ -26,7 +26,7 @@ public class CommandRegister implements ICommand {
                 request.setAttribute(ID,2);
                 break;
             case "admin":
-
+                request.setAttribute(ID,1);
                 break;
             default:
                 break;

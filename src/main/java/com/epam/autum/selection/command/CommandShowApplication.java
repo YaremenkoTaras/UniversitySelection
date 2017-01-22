@@ -28,14 +28,14 @@ public class CommandShowApplication implements ICommand {
         try {
             loadAttributes(request, response);
         } catch (LogicException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return page;
     }
 
     private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
-        int appID = Integer.parseInt(request.getParameter(ID));
+        int appID = Integer.parseInt(request.getParameter(ADDITIONAL));
 
         Application application = ApplicationLogic.findApplication(appID);
         User user = UserLogic.findUser(application.getUserID()).get();
