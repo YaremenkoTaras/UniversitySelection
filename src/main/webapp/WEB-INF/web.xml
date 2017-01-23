@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>com.epam.autum.selection.servlet.Controller</servlet-class>
+        <servlet-class>com.epam.autum.selection.controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>

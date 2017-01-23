@@ -15,9 +15,8 @@ public class PageConfigurator {
 	public static final String FACULTIES_PAGE = "FACULTIES";
 	public static final String REGISTRATION_PAGE = "REGISTRATION";
 	public static final String CHANGE_USER_INFORMATION_PAGE = "CHANGE_USER_INFORMATION";
-	public static final String CHANGE_ADMINISTRATOR_INFORMATION_PAGE = "CHANGE_ADMINISTRATOR_INFORMATION";
-	public static final String NEW_ADMINISTRATOR_PAGE = "NEW_ADMINISTRATOR";
 	public static final String ADD_MARK_PAGE = "ADD_MARK";
+	public static final String SETTING_PAGE = "SETTING";
 
 	private static final String RESOURCE_FILE = "pages";
 	private static ResourceBundle resource;

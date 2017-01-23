@@ -1,8 +1,8 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.entity.ApplicantMark;
-import com.epam.autum.selection.entity.Subject;
-import com.epam.autum.selection.entity.User;
+import com.epam.autum.selection.database.entity.ApplicantMark;
+import com.epam.autum.selection.database.entity.Subject;
+import com.epam.autum.selection.database.entity.User;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.service.MarkLogic;
 import com.epam.autum.selection.service.PageConfigurator;
