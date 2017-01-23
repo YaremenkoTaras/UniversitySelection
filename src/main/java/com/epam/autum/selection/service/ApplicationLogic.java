@@ -25,7 +25,6 @@ import java.util.Optional;
 public class ApplicationLogic {
 
     public static ValidationResult checkMarkForFaculty(int userID, int facultyID) throws LogicException {
-
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
 
         List<ApplicantMark> markList;
