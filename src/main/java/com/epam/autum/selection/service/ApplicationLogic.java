@@ -242,6 +242,7 @@ public class ApplicationLogic {
                 }
                 updated = (applicationDAO.update(application) && updated);
             }
+            connection.commit();
             connection.setAutoCommit(true);
             if (updated)
                 result = ValidationResult.ALL_RIGHT;
