@@ -85,7 +85,6 @@ public class CommandShowFaculty implements ICommand {
                 request.setAttribute(LOW_MARK, true); break;
             default: break;
         }
-
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(FACULTY_SUBJECTS, subjects);
         request.setAttribute(APPLICATIONS, applications);
