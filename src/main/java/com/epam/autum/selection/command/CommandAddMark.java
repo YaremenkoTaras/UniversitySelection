@@ -52,7 +52,7 @@ public class CommandAddMark implements ICommand {
         int userID = ((User) request.getSession().getAttribute(USER)).getId();
         List<Subject> subjectList = null;
         List<MarkDTO> marks = null;
-        List<Subject> subjects = new ArrayList<>();
+        List<Subject> subjectRemain = new ArrayList<>();
 
         try {
             subjectList = SubjectLogic.getSubjects();
@@ -68,10 +68,10 @@ public class CommandAddMark implements ICommand {
                 }
             }
             if (!res) {
-                subjects.add(subj);
+                subjectRemain.add(subj);
             }
         }
         request.setAttribute(MARKS, marks);
-        request.setAttribute(SUBJECTS, subjects);
+        request.setAttribute(SUBJECTS, subjectRemain);
     }
 }
