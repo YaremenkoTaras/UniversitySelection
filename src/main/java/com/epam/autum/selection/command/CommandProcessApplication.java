@@ -2,7 +2,6 @@ package com.epam.autum.selection.command;
 
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.service.ApplicationLogic;
-import com.epam.autum.selection.util.ValidationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,9 +26,8 @@ public class CommandProcessApplication implements ICommand{
 
             case "decline":
                 applicationDecline(request, response);
-                System.out.println("in decline");
-
                 break;
+
             default:
                 break;
         }
@@ -44,11 +42,11 @@ public class CommandProcessApplication implements ICommand{
             log.error(e);
         }
     }
+
     private void applicationDecline(HttpServletRequest request, HttpServletResponse response){
         try {
             int applicationID = Integer.parseInt(request.getParameter(USER_APPLICATION));
-            ValidationResult result = ApplicationLogic.declineApplication(applicationID);
-            System.out.println("\n\n\n" + result + "\n\n\n");
+            ApplicationLogic.declineApplication(applicationID);
         } catch (LogicException | NumberFormatException e) {
             log.error(e);
         }
