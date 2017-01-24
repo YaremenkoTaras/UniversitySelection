@@ -58,7 +58,13 @@
 
             <div class="col-xs-4 descripted_select">
                 <select size="1" name="month" id="form10" required>
-                    <option selected value="01">January</option>
+                    <c:if test="${month == null}">
+                        <option selected value="01">January</option>
+                    </c:if>
+                    <c:if test="${month != null}">
+                        <option selected value="${month}">${month}</option>
+                    </c:if>
+                    <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
                     <option value="04">April</option>
@@ -83,12 +89,17 @@
         </div>
         <br>
         <div class="col-xs-4 descripted_select">
-            <select size="2" name="sex" required id="form11">
-                <option selected value="M">Male</option>
+            <select size="1" name="sex" required id="form11">
+                <c:if test="${sex == null}">
+                    <option selected value="M">M</option>
+                </c:if>
+                <c:if test="${sex != null}">
+                    <option selected value="${sex}">${sex}</option>
+                </c:if>
+                <option value="M">Male</option>
                 <option value="F">Female</option>
             </select>
             <label class="active" for="form11">${content.getString("registration.sex")}</label>
-
         </div>
 
         <br>

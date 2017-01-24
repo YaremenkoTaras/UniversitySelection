@@ -37,7 +37,6 @@ public class CommandShowApplicant implements ICommand {
 
     private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
         User user = (User) request.getSession().getAttribute(USER);
-
         List<MarkDTO> marks = MarkLogic.getMarksByUser(user.getId());
         List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByUser(user.getId());
         request.setAttribute(MARKS, marks);
