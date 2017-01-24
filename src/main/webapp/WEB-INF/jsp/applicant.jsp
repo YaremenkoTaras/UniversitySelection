@@ -47,7 +47,7 @@
     <h4>${content.getString("applicant.applications_list")}</h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
-            <td>${content.getString("application.applicant")}</td>
+            <td>${content.getString("application.faculty")}</td>
             <td>${content.getString("application.overall")}</td>
             <td>${content.getString("application.date")}</td>
             <td>${content.getString("application.status")}</td>
@@ -55,10 +55,10 @@
         </tr>
         <c:forEach  var="app" items="${applications}">
             <tr>
-                <td>${app.facultyID}</td>
+                <td>${app.faculty}</td>
                 <td>${app.overall}</td>
                 <td>${app.date}</td>
-                <td>${app.statusID}</td>
+                <td>${app.status}</td>
                 <td>${app.description}</td>
             </tr>
         </c:forEach>

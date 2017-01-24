@@ -1,26 +1,41 @@
 package com.epam.autum.selection.database.dto;
 
+import com.epam.autum.selection.database.entity.Application;
+import com.epam.autum.selection.database.entity.Faculty;
+import com.epam.autum.selection.database.entity.User;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
 /**
- * Created by Tapac on 02.01.2017.
+ * Created by Tapac on 24.01.2017.
  */
 public class ApplicationDTO {
 
-    private static final String ACCEPT  = "ACCEPT";
+    private static final String ACCEPT = "ACCEPT";
     private static final String PROCESS = "PROCESS";
     private static final String DECLINE = "DECLINE";
 
     private Integer id;
+
     private LocalDate date;
-    private String  description;
+    private String description;
     private Integer overall;
     private String faculty;
     private String userName;
     private String status;
 
     public ApplicationDTO() {
+    }
+
+    public ApplicationDTO(Application app, Faculty faculty, User user) {
+        setId(app.getId());
+        setDate(app.getDate());
+        setDescription(app.getDescription());
+        setOverall(app.getOverall());
+        setStatus(app.getStatusID());
+        setFaculty(faculty.getName());
+        setUserName(user.getName());
     }
 
     public ApplicationDTO(int id, Date date, String description, Integer overall, String faculty, String userName, Integer statusID) {
@@ -31,6 +46,14 @@ public class ApplicationDTO {
         this.faculty = faculty;
         this.userName = userName;
         setStatus(statusID);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public LocalDate getDate() {
@@ -78,7 +101,7 @@ public class ApplicationDTO {
     }
 
     public void setStatus(Integer status) {
-        switch (status){
+        switch (status) {
             case 1:
                 this.status = ACCEPT;
                 break;

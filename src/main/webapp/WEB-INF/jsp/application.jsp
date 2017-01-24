@@ -78,10 +78,10 @@
         </tr>
         <c:forEach var="app" items="${applications}">
             <tr>
-                <td>${app.facultyID}</td>
+                <td>${app.faculty}</td>
                 <td>${app.overall}</td>
                 <td>${app.date}</td>
-                <td>${app.statusID}</td>
+                <td>${app.status}</td>
                 <td>${app.description}</td>
             </tr>
         </c:forEach>

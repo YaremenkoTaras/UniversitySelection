@@ -67,17 +67,17 @@
             <td>${content.getString("application.applicant")}</td>
             <td>${content.getString("application.overall")}</td>
             <td>${content.getString("application.date")}</td>
-            <td>${content.getString("application.status")}</td>
             <td>${content.getString("application.description")}</td>
+            <td>${content.getString("application.status")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
-            <c:if test="${app.statusID == 1}">
+            <c:if test="${app.status.equals(\"ACCEPT\")}">
                 <tr>
-                    <td>${app.userID}</td>
+                    <td>${app.userName}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.statusID}</td>
                     <td>${app.description}</td>
+                    <td>${app.status}</td>
                 </tr>
             </c:if>
         </c:forEach>
@@ -91,17 +91,17 @@
             <td>${content.getString("application.applicant")}</td>
             <td>${content.getString("application.overall")}</td>
             <td>${content.getString("application.date")}</td>
-            <td>${content.getString("application.status")}</td>
             <td>${content.getString("application.description")}</td>
+            <td>${content.getString("application.status")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
-            <c:if test="${app.statusID == 2}">
+            <c:if test="${app.status.equals(\"PROCESS\")}">
                 <tr>
-                    <td>${app.userID}</td>
+                    <td>${app.userName}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.statusID}</td>
                     <td>${app.description}</td>
+                    <td>${app.status}</td>
                 </tr>
             </c:if>
         </c:forEach>

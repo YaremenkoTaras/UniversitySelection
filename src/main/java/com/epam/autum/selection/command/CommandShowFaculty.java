@@ -1,6 +1,6 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.entity.Application;
+import com.epam.autum.selection.database.dto.ApplicationDTO;
 import com.epam.autum.selection.database.entity.Faculty;
 import com.epam.autum.selection.database.entity.FacultySubject;
 import com.epam.autum.selection.database.entity.User;
@@ -27,8 +27,8 @@ public class CommandShowFaculty implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTIES_PAGE);
         try {
-            int userID = ((User)request.getSession().getAttribute(USER)).getId();
-            switch (userID){
+            int userRoleID = ((User)request.getSession().getAttribute(USER)).getRoleID();
+            switch (userRoleID){
                 case 1:
                     loadAdminAttributes(request, response);
                     page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTY_COMMISSION_PAGE);
@@ -57,7 +57,7 @@ public class CommandShowFaculty implements ICommand {
         int id = Integer.parseInt(request.getParameter(ID));
 
         Faculty faculty = FacultyLogic.findFacultyByID(id);
-        List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
+        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(APPLICATIONS, applications);
@@ -71,8 +71,8 @@ public class CommandShowFaculty implements ICommand {
 
         Faculty faculty = FacultyLogic.findFacultyByID(id);
         List<FacultySubject> subjects = SubjectLogic.getSubjectsByFaculty(id);
-        List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        Application application = ApplicationLogic.findApplication(userID, id);
+        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
+        ApplicationDTO application = ApplicationLogic.findApplication(userID, id);
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(FACULTY_SUBJECTS, subjects);

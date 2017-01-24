@@ -1,14 +1,11 @@
 package com.epam.autum.selection.service;
 
-import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
-import com.epam.autum.selection.database.dao.interfaces.IApplicantMarkDAO;
-import com.epam.autum.selection.database.dao.interfaces.IApplicationDAO;
-import com.epam.autum.selection.database.dao.interfaces.IFacultySubjectDAO;
 import com.epam.autum.selection.database.connection.ConnectionPool;
 import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.entity.ApplicantMark;
-import com.epam.autum.selection.database.entity.Application;
-import com.epam.autum.selection.database.entity.FacultySubject;
+import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
+import com.epam.autum.selection.database.dao.interfaces.*;
+import com.epam.autum.selection.database.dto.ApplicationDTO;
+import com.epam.autum.selection.database.entity.*;
 import com.epam.autum.selection.exception.DAOException;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.util.DateConverter;
@@ -26,7 +23,6 @@ public class ApplicationLogic {
 
     public static ValidationResult checkMarkForFaculty(int userID, int facultyID) throws LogicException {
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
-
         List<ApplicantMark> markList;
         List<FacultySubject> subjectList;
 
@@ -100,11 +96,8 @@ public class ApplicationLogic {
     }
 
     public static ValidationResult addApplication(int userID, int facultyID, String description) throws LogicException {
-
         ValidationResult result;
-
         int overall = findOverall(userID, facultyID);
-
         Optional<WrapperConnection> connectionOptional = Optional.empty();
         try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
@@ -124,15 +117,25 @@ public class ApplicationLogic {
         return result;
     }
 
-    public static List<Application> findApplicationsByUser(int userID) throws LogicException {
+    public static List<ApplicationDTO> findApplicationsByUser(int userID) throws LogicException {
         List<Application> applications;
+        List<ApplicationDTO> applicationDTOs = new ArrayList<>();
 
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
+            IFacultyDAO facultyDAO = DaoFactory.createFacultyDAO(connection);
+            IUserDAO userDAO = DaoFactory.createUserDAO(connection);
             applications = markDAO.findApplicationsByUser(userID);
+            for (Application app : applications) {
+                applicationDTOs.add(new ApplicationDTO(
+                        app,
+                        facultyDAO.findEntityById(app.getFacultyID()).get(),
+                        userDAO.findEntityById(app.getUserID()).get()
+                ));
+            }
         } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
@@ -141,12 +144,11 @@ public class ApplicationLogic {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
 
-        return applications;
+        return applicationDTOs;
     }
 
     public static Application findApplication(int applicationID) throws LogicException {
         Application application;
-
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
@@ -163,15 +165,24 @@ public class ApplicationLogic {
         return application;
     }
 
-    public static Application findApplication(int userID, int facultyId) throws LogicException {
-        Application application;
-
+    public static ApplicationDTO findApplication(int userID, int facultyId) throws LogicException {
+        ApplicationDTO applicationDTO = null;
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
-            IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
-            application = markDAO.findApplicationByUserFaculty(userID, facultyId).orElse(null);
+            IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
+            IFacultyDAO facultyDAO = DaoFactory.createFacultyDAO(connection);
+            IUserDAO userDAO = DaoFactory.createUserDAO(connection);
+            Optional<Application> application = applicationDAO.findApplicationByUserFaculty(userID, facultyId);
+            Optional<User> user = userDAO.findEntityById(userID);
+            Optional<Faculty> faculty = facultyDAO.findEntityById(facultyId);
+            if (application.isPresent())
+                applicationDTO = new ApplicationDTO(
+                        application.get(),
+                        faculty.get(),
+                        user.get()
+                );
         } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
@@ -179,18 +190,28 @@ public class ApplicationLogic {
         } finally {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
-        return application;
+        return applicationDTO;
     }
 
-    public static List<Application> findApplicationsByFaculty(int facultyID) throws LogicException {
+    public static List<ApplicationDTO> findApplicationsByFaculty(int facultyID) throws LogicException {
         List<Application> applications;
+        List<ApplicationDTO> applicationDTOs = new ArrayList<>();
 
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicationDAO markDAO = DaoFactory.createApplicationDAO(connection);
+            IFacultyDAO facultyDAO = DaoFactory.createFacultyDAO(connection);
+            IUserDAO userDAO = DaoFactory.createUserDAO(connection);
             applications = markDAO.findApplicationsByFaculty(facultyID);
+            for (Application app : applications) {
+                applicationDTOs.add(new ApplicationDTO(
+                        app,
+                        facultyDAO.findEntityById(app.getFacultyID()).get(),
+                        userDAO.findEntityById(app.getUserID()).get()
+                ));
+            }
         } catch (SQLException e) {
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
@@ -198,28 +219,25 @@ public class ApplicationLogic {
         } finally {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
-        return applications;
+        return applicationDTOs;
     }
 
     public static ValidationResult acceptApplication(int applicationID) throws LogicException {
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
 
-        Application app = findApplication(applicationID);
-        List<Application> applicationList = ApplicationLogic.findApplicationsByUser(app.getUserID());
-
         Optional<WrapperConnection> connectionOptional = Optional.empty();
-
         try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
             connection.setAutoCommit(false);
-            boolean updated = true;
             IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
-            for(Application application : applicationList){
-                if(application.getId() == applicationID) {
+            Application app = applicationDAO.findEntityById(applicationID).get();
+            List<Application> applicationList = applicationDAO.findApplicationsByUser(app.getUserID());
+            boolean updated = true;
+            for (Application application : applicationList) {
+                if (application.getId() == applicationID) {
                     application.setStatusID(1);
-                }
-                else {
+                } else {
                     application.setStatusID(3);
                 }
                 updated = (applicationDAO.update(application) && updated);
@@ -238,13 +256,12 @@ public class ApplicationLogic {
     public static ValidationResult declineApplication(int applicationID) throws LogicException {
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
 
-        Application app = findApplication(applicationID);
-
         Optional<WrapperConnection> connectionOptional = Optional.empty();
         try {
             connectionOptional = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = connectionOptional.orElseThrow(SQLException::new);
             IApplicationDAO applicationDAO = DaoFactory.createApplicationDAO(connection);
+            Application app = applicationDAO.findEntityById(applicationID).orElseThrow(LogicException::new);
             app.setStatusID(3);
             boolean updated = applicationDAO.update(app);
             if (updated)
@@ -257,8 +274,4 @@ public class ApplicationLogic {
         }
         return result;
     }
-
-
-
-
 }

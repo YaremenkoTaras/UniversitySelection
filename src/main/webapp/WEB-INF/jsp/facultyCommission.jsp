@@ -27,12 +27,12 @@
             <td>${content.getString("application.description")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
-            <c:if test="${app.statusID == 1}">
+            <c:if test="${app.status.equals(\"ACCEPT\")}">
                 <tr>
-                    <td>${app.userID}</td>
+                    <td>${app.userName}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.statusID}</td>
+                    <td>${app.status}</td>
                     <td>${app.description}</td>
                 </tr>
             </c:if>
@@ -52,12 +52,12 @@
             <td>${content.getString("faculty.commission.watch")}</td>
         </tr>
         <c:forEach var="app" items="${applications}">
-            <c:if test="${app.statusID == 2}">
+            <c:if test="${app.status.equals(\"PROCESS\")}">
                 <tr>
-                    <td>${app.userID}</td>
+                    <td>${app.userName}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.statusID}</td>
+                    <td>${app.status}</td>
                     <td>${app.description}</td>
                     <td>
                         <form action="/Controller" method="post">
