@@ -24,7 +24,7 @@
 
         <c:forEach var="value" items="${marks}">
             <tr>
-                <td>${value.subjectID}</td>
+                <td>${value.subject}</td>
                 <td>${value.mark}</td>
             </tr>
         </c:forEach>

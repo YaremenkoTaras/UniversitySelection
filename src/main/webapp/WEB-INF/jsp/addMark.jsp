@@ -22,7 +22,7 @@
         </tr>
         <c:forEach var="value" items="${marks}">
             <tr>
-                <td>${value.subjectID}</td>
+                <td>${value.subject}</td>
                 <td>${value.mark}</td>
             </tr>
         </c:forEach>
@@ -36,7 +36,7 @@
         </c:forEach>
     </select>
 
-    <input class="col-xs-2 form-control validate" placeholder="100" type="number" min="1" max="200"
+    <input class="col-xs-2 form-control validate" placeholder="100" type="number" min="100" max="200"
            value="" name="mark" id="form2" required pattern="[0-9]{3}">
     </input>
     <input type="hidden" name="command" value="addMark"/>

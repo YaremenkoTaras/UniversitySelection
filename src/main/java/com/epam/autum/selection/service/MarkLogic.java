@@ -1,16 +1,20 @@
 package com.epam.autum.selection.service;
 
-import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
-import com.epam.autum.selection.database.dao.interfaces.IApplicantMarkDAO;
 import com.epam.autum.selection.database.connection.ConnectionPool;
 import com.epam.autum.selection.database.connection.WrapperConnection;
+import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
+import com.epam.autum.selection.database.dao.interfaces.IApplicantMarkDAO;
+import com.epam.autum.selection.database.dao.interfaces.ISubjectDAO;
+import com.epam.autum.selection.database.dto.MarkDTO;
 import com.epam.autum.selection.database.entity.ApplicantMark;
+import com.epam.autum.selection.database.entity.Subject;
 import com.epam.autum.selection.exception.DAOException;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.util.ValidationResult;
 import com.epam.autum.selection.util.Validator;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,14 +73,22 @@ public class MarkLogic {
         return Optional.ofNullable(mark);
     }
 
-    public static List<ApplicantMark> getMarksByUser(int userID) throws LogicException {
-        List<ApplicantMark> marks;
+    public static List<MarkDTO> getMarksByUser(int userID) throws LogicException {
+        List<MarkDTO> marks = new ArrayList<>();
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IApplicantMarkDAO markDAO = DaoFactory.createApplicantMarkDAO(connection);
-            marks = markDAO.findMarkByUser(userID);
+            ISubjectDAO subjectDAO = DaoFactory.createSubjectDAO(connection);
+            List<ApplicantMark> applicantMarks = markDAO.findMarkByUser(userID);
+            List<Subject> subjects = subjectDAO.findAll();
+            for(ApplicantMark mark : applicantMarks){
+                for(Subject subject : subjects){
+                    if(mark.getSubjectID() == subject.getId())
+                        marks.add(new MarkDTO(mark,subject));
+                }
+            }
         }catch (SQLException e){
             throw new LogicException("DB connection error : ", e);
         } catch (DAOException e) {
