@@ -19,43 +19,26 @@ public class CommandAddApplication implements ICommand {
     private static Logger log = LogManager.getLogger(CommandAddApplication.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response){
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         loadAttribute(request, response);
 
-        String page = (new CommandShowFaculty()).execute(request,response);
+        String page = (new CommandShowFaculty()).execute(request, response);
         return page;
     }
 
-    private void loadAttribute(HttpServletRequest request, HttpServletResponse response){
+    private void loadAttribute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String description = "";
-        Integer userID    = null;
-        Integer facultyID = null;
-        try {
-            userID = ((User) session.getAttribute(USER)).getId();
-            facultyID = Integer.parseInt(request.getParameter(ID));
-            description = request.getParameter(DESCRIPTION);
-        }catch (Exception e) {
-            log.error(e);
-        }
-        ValidationResult result;
-        try {
-            result = ApplicationLogic.checkMarkForFaculty(userID,facultyID);
-            switch (result){
-                case ALL_RIGHT:
-                    result = ApplicationLogic.addApplication(userID,facultyID,description);
-                    if (result == ValidationResult.ALL_RIGHT)
-                        log.info("Application add:" + result);
-                    break;
-                case MISSING_MARK:
-                    request.setAttribute(MISSING_MARK, true); break;
-                case LOW_MARK:
-                    request.setAttribute(LOW_MARK, true); break;
-                default:
-                    break;
-            }
 
+
+        Integer userID = ((User) session.getAttribute(USER)).getId();
+        Integer facultyID = Integer.parseInt(request.getParameter(ID));
+        String description = request.getParameter(DESCRIPTION);
+
+        try {
+            ValidationResult result = ApplicationLogic.addApplication(userID, facultyID, description);
+            if (result == ValidationResult.ALL_RIGHT)
+                log.info("Application added:" + result);
         } catch (LogicException e) {
             log.error(e);
         }

@@ -9,6 +9,7 @@ import com.epam.autum.selection.service.ApplicationLogic;
 import com.epam.autum.selection.service.FacultyLogic;
 import com.epam.autum.selection.service.PageConfigurator;
 import com.epam.autum.selection.service.SubjectLogic;
+import com.epam.autum.selection.util.ValidationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -72,7 +73,16 @@ public class CommandShowFaculty implements ICommand {
         Faculty faculty = FacultyLogic.findFacultyByID(id);
         List<SubjectDTO> subjects = SubjectLogic.getSubjectsByFaculty(id);
         List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        ApplicationDTO application = ApplicationLogic.findApplication(userID, id);
+        ApplicationDTO application = ApplicationLogic.findApplication(userID, faculty.getId());;
+
+        ValidationResult result = ApplicationLogic.checkMarkForFaculty(userID,faculty.getId());
+        switch (result){
+            case MISSING_MARK:
+                request.setAttribute(MISSING_MARK, true); break;
+            case LOW_MARK:
+                request.setAttribute(LOW_MARK, true); break;
+            default: break;
+        }
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(FACULTY_SUBJECTS, subjects);
