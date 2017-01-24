@@ -24,7 +24,7 @@ public class CommandAddMark implements ICommand {
     private static Logger log = LogManager.getLogger(CommandAddMark.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
         String parameter = request.getParameter("additional");
         switch (parameter){

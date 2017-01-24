@@ -25,7 +25,7 @@ public class ControllerHelper {
         commands.put("showApplication", new CommandShowApplication());
         commands.put("addApplication", new CommandAddApplication());
         commands.put("addMark", new CommandAddMark());
-        commands.put("changeUserInfo", new CommandChangeUser());
+        commands.put("changeUserInfo", new CommandChangeUserInfo());
         commands.put("logout", new CommandLogout());
         commands.put("processApplication", new CommandProcessApplication());
     }

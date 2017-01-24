@@ -20,7 +20,7 @@ public class CommandChangeUserInfo implements ICommand {
     private static Logger log = LogManager.getLogger(CommandChangeUserInfo.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String page;
         String add = request.getParameter(ADDITIONAL);
         switch (add) {
@@ -37,7 +37,7 @@ public class CommandChangeUserInfo implements ICommand {
         return page;
     }
 
-    private String updateUser(HttpServletRequest request, HttpServletResponse response) {
+    private String updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page;
         ValidationResult result = ValidationResult.UNKNOWN_ERROR;
 

@@ -13,8 +13,10 @@ import com.epam.autum.selection.util.ValidationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ public class CommandShowFaculty implements ICommand {
     private static Logger log = LogManager.getLogger(CommandShowFaculty.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = PageConfigurator.getConfigurator().getPage(PageConfigurator.FACULTIES_PAGE);
         try {
             int userRoleID = ((User)request.getSession().getAttribute(USER)).getRoleID();
@@ -73,7 +75,7 @@ public class CommandShowFaculty implements ICommand {
         Faculty faculty = FacultyLogic.findFacultyByID(id);
         List<SubjectDTO> subjects = SubjectLogic.getSubjectsByFaculty(id);
         List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        ApplicationDTO application = ApplicationLogic.findApplication(userID, faculty.getId());;
+        ApplicationDTO application = application = ApplicationLogic.findApplication(userID, faculty.getId());;
 
         ValidationResult result = ApplicationLogic.checkMarkForFaculty(userID,faculty.getId());
         switch (result){

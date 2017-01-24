@@ -20,7 +20,7 @@
         <div class="row">
 
             <div class="col-xs-6 md-form">
-                <input class="col-xs-2 form-control validate" type="text" placeholder="Address" value="${address}"
+                <input class="col-xs-2 form-control validate" type="text" placeholder="Address" value="${user.address}"
                        name="address" id="form3" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z\s0-9]+$">
                 </input
                 <label class="active" for="form3">${content.getString("registration.address")}</label>
@@ -28,14 +28,14 @@
 
             <div class="md-form col-xs-4">
                 <input class="col-xs-2 form-control validate" placeholder="+xx(xxx)xxx-xx-xx" type="text"
-                       value="${phone}" name="phone" id="form7" required
+                       value="${user.phone}" name="phone" id="form7" required
                        pattern="^((8|\+7|\+38)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
                 </input>
                 <label class="active" for="form7">${content.getString("registration.phone")}</label>
             </div>
 
             <div class="md-form col-xs-4">
-                <input class="col-xs-2 form-control validate" placeholder="user@email.com" type="email" value="${email}"
+                <input class="col-xs-2 form-control validate" placeholder="user@email.com" type="email" value="${user.email}"
                        name="email" id="form8" required> </input>
                 <label class="active" for="form8">${content.getString("registration.email")}</label>
                 <label class="active" for="form8">${description}</label>
