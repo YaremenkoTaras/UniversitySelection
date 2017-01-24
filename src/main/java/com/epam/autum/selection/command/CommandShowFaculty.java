@@ -75,7 +75,7 @@ public class CommandShowFaculty implements ICommand {
         Faculty faculty = FacultyLogic.findFacultyByID(id);
         List<SubjectDTO> subjects = SubjectLogic.getSubjectsByFaculty(id);
         List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        ApplicationDTO application = application = ApplicationLogic.findApplication(userID, faculty.getId());;
+        ApplicationDTO application = ApplicationLogic.findApplication(userID, faculty.getId());;
 
         ValidationResult result = ApplicationLogic.checkMarkForFaculty(userID,faculty.getId());
         switch (result){
