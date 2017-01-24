@@ -25,7 +25,7 @@
         </tr>
         <c:forEach var="fsub" items="${facultysubjects}">
             <tr>
-                <td>${fsub.subjectID}</td>
+                <td>${fsub.subject}</td>
                 <td>${fsub.minMark}</td>
             </tr>
         </c:forEach>

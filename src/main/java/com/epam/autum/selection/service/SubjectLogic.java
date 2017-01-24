@@ -5,6 +5,7 @@ import com.epam.autum.selection.database.dao.interfaces.IFacultySubjectDAO;
 import com.epam.autum.selection.database.dao.interfaces.ISubjectDAO;
 import com.epam.autum.selection.database.connection.ConnectionPool;
 import com.epam.autum.selection.database.connection.WrapperConnection;
+import com.epam.autum.selection.database.dto.SubjectDTO;
 import com.epam.autum.selection.database.entity.FacultySubject;
 import com.epam.autum.selection.database.entity.Subject;
 import com.epam.autum.selection.exception.DAOException;
@@ -21,41 +22,30 @@ import java.util.Optional;
  */
 public class SubjectLogic {
 
-    public static List<FacultySubject> getSubjectsByFaculty(int facultyID) throws LogicException {
-        List<FacultySubject> subjectList;
+    public static List<SubjectDTO> getSubjectsByFaculty(int facultyID) throws LogicException {
+        List<SubjectDTO> subjectList = new ArrayList<>();
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
-            IFacultySubjectDAO dao = DaoFactory.createFacultySubjectDAO(connection);
-            subjectList = dao.findSubjectsByFaculty(facultyID);
+            IFacultySubjectDAO facultySubjectDAO = DaoFactory.createFacultySubjectDAO(connection);
+            ISubjectDAO subjectDAO = DaoFactory.createSubjectDAO(connection);
+            List<FacultySubject> facultySubjects = facultySubjectDAO.findSubjectsByFaculty(facultyID);
+            List<Subject> subjects = subjectDAO.findAll();
+            facultySubjects.forEach(fs -> {
+                for (Subject s : subjects) {
+                    if (fs.getSubjectID() == s.getId())
+                        subjectList.add(new SubjectDTO(fs,s));
+                }
+            });
         } catch (SQLException e) {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
-        }finally {
+        } finally {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return subjectList;
-    }
-
-    public static Integer getMinMark(int facultyID, int subjectID) throws LogicException {
-        int mimMark = 0;
-        Optional<WrapperConnection> optConnection = Optional.empty();
-        try {
-            optConnection = ConnectionPool.getInstance().takeConnection();
-            WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
-            IFacultySubjectDAO dao = DaoFactory.createFacultySubjectDAO(connection);
-            mimMark = dao.findEntityById(facultyID, subjectID).get().getMinMark();
-
-        } catch (SQLException e) {
-            throw new LogicException("DB connection error: ", e);
-        } catch (DAOException e) {
-            throw new LogicException(e);
-        }finally {
-            optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
-        }
-        return mimMark;
     }
 
     public static List<Subject> getSubjects() throws LogicException {
@@ -70,7 +60,7 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
-        }finally {
+        } finally {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return subjectList;
@@ -84,9 +74,9 @@ public class SubjectLogic {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             ISubjectDAO dao = DaoFactory.createSubjectDAO(connection);
-            if (dao.isExist(subjectName)){
+            if (dao.isExist(subjectName)) {
                 result = ValidationResult.SUBJECT_ALREADY_EXIST;
-            }else {
+            } else {
                 Subject subject = new Subject(0, subjectName);
                 dao.create(subject);
                 result = ValidationResult.ALL_RIGHT;
@@ -95,7 +85,7 @@ public class SubjectLogic {
             throw new LogicException("DB connection error: ", e);
         } catch (DAOException e) {
             throw new LogicException(e);
-        }finally {
+        } finally {
             optConnection.ifPresent(ConnectionPool.getInstance()::returnConnection);
         }
         return result;
