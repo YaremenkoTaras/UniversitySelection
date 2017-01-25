@@ -28,6 +28,7 @@ public class ControllerHelper {
         commands.put("changeUserInfo", new CommandChangeUserInfo());
         commands.put("logout", new CommandLogout());
         commands.put("processApplication", new CommandProcessApplication());
+        commands.put("changeLanguage", new CommandChangeLanguage());
     }
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));

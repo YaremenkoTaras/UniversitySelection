@@ -29,6 +29,7 @@ public interface ICommand {
     String SUBJECT = "subject";
     String DESCRIPTION = "description";
     String ADDITIONAL = "additional";
+    String LANGUAGE = "language";
 
     String MESSAGE = "message";
 
