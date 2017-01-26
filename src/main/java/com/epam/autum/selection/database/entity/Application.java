@@ -1,38 +1,53 @@
 package com.epam.autum.selection.database.entity;
 
-import java.sql.Date;
+import com.epam.autum.selection.database.dto.ApplicationDTO;
 
-/**
- * Created by Tapac on 02.01.2017.
- */
+import java.sql.Date;
+import java.time.LocalDate;
+
+
 public class Application extends Entity{
 
-    private Date    date;
-    private String  description;
+    private static final String ACCEPT = "ACCEPT";
+    private static final String PROCESS = "PROCESS";
+    private static final String DECLINE = "DECLINE";
+
+    private LocalDate date;
+    private String description;
     private Integer overall;
-    private Integer facultyID;
-    private Integer userID;
-    private Integer statusID;
+    private Faculty faculty;
+    private User user;
+    private String status;
 
     public Application() {
     }
 
-    public Application(int id, Date date, String description, Integer overall, Integer facultyID, Integer userID, Integer statusID) {
-        super(id);
-        this.date = date;
-        this.description = description;
-        this.overall = overall;
-        this.facultyID = facultyID;
-        this.userID = userID;
-        this.statusID = statusID;
+    public Application(ApplicationDTO app, Faculty faculty, User user) {
+        super(app.getId());
+        setDate(app.getDate());
+        setDescription(app.getDescription());
+        setOverall(app.getOverall());
+        setStatus(app.getStatusID());
+        setFaculty(faculty);
+        setUser(user);
     }
 
-    public Date getDate() {
+    public Application(int id, Date date, String description, Integer overall, Faculty faculty, User user, Integer statusID) {
+        super(id);
+        this.date = date.toLocalDate();
+        this.description = description;
+        this.overall = overall;
+        this.faculty = faculty;
+        this.user = user;
+        setStatus(statusID);
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = date.toLocalDate();
     }
 
     public String getDescription() {
@@ -51,40 +66,60 @@ public class Application extends Entity{
         this.overall = overall;
     }
 
-    public Integer getFacultyID() {
-        return facultyID;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyID(Integer facultyID) {
-        this.facultyID = facultyID;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getStatusID() {
-        return statusID;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusID(Integer statusID) {
-        this.statusID = statusID;
+    public void setStatus(Integer status) {
+        switch (status) {
+            case 1:
+                this.status = ACCEPT;
+                break;
+            case 2:
+                this.status = PROCESS;
+                break;
+            case 3:
+                this.status = DECLINE;
+                break;
+            default:
+                this.status = DECLINE;
+                break;
+        }
+    }
+
+    public boolean isAccept(){
+        return status.equals(ACCEPT);
+    }
+    public boolean isProcess(){
+        return status.equals(PROCESS);
     }
 
     @Override
     public String toString() {
         return "Application{" +
-                "ID=" + getId() +
+                "id=" + super.getId() +
                 ", date=" + date +
                 ", description='" + description + '\'' +
                 ", overall=" + overall +
-                ", facultyID=" + facultyID +
-                ", userID=" + userID +
-                ", statusID=" + statusID +
+                ", faculty='" + faculty + '\'' +
+                ", user='" + user + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
@@ -95,15 +130,24 @@ public class Application extends Entity{
 
         Application that = (Application) o;
 
+        if (!getDate().equals(that.getDate())) return false;
+        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+            return false;
         if (!getOverall().equals(that.getOverall())) return false;
-        return getFacultyID().equals(that.getFacultyID());
+        if (!getFaculty().equals(that.getFaculty())) return false;
+        if (!getUser().equals(that.getUser())) return false;
+        return getStatus().equals(that.getStatus());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getOverall().hashCode();
-        result = 31 * result + getFacultyID().hashCode();
+        int result = getDate().hashCode();
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getOverall().hashCode();
+        result = 31 * result + getFaculty().hashCode();
+        result = 31 * result + getUser().hashCode();
+        result = 31 * result + getStatus().hashCode();
         return result;
     }
 }

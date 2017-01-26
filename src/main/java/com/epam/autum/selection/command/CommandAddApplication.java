@@ -37,7 +37,7 @@ public class CommandAddApplication implements ICommand{
         try {
             ValidationResult result = ApplicationLogic.addApplication(userID, facultyID, description);
             if (result == ValidationResult.ALL_RIGHT)
-                log.info("Application added:" + result);
+                log.info("ApplicationDTO added:" + result);
         } catch (LogicException e) {
             log.error(e);
         }

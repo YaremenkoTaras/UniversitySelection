@@ -5,7 +5,7 @@ import com.epam.autum.selection.database.dao.interfaces.IFacultySubjectDAO;
 import com.epam.autum.selection.database.dao.interfaces.ISubjectDAO;
 import com.epam.autum.selection.database.connection.ConnectionPool;
 import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.dto.SubjectDTO;
+import com.epam.autum.selection.database.dto.FacultySubjectDTO;
 import com.epam.autum.selection.database.entity.FacultySubject;
 import com.epam.autum.selection.database.entity.Subject;
 import com.epam.autum.selection.exception.DAOException;
@@ -22,20 +22,20 @@ import java.util.Optional;
  */
 public class SubjectLogic {
 
-    public static List<SubjectDTO> getSubjectsByFaculty(int facultyID) throws LogicException {
-        List<SubjectDTO> subjectList = new ArrayList<>();
+    public static List<FacultySubject> getSubjectsByFaculty(int facultyID) throws LogicException {
+        List<FacultySubject> subjectList = new ArrayList<>();
         Optional<WrapperConnection> optConnection = Optional.empty();
         try {
             optConnection = ConnectionPool.getInstance().takeConnection();
             WrapperConnection connection = optConnection.orElseThrow(SQLException::new);
             IFacultySubjectDAO facultySubjectDAO = DaoFactory.createFacultySubjectDAO(connection);
             ISubjectDAO subjectDAO = DaoFactory.createSubjectDAO(connection);
-            List<FacultySubject> facultySubjects = facultySubjectDAO.findSubjectsByFaculty(facultyID);
+            List<FacultySubjectDTO> facultySubjectDTOs = facultySubjectDAO.findSubjectsByFaculty(facultyID);
             List<Subject> subjects = subjectDAO.findAll();
-            facultySubjects.forEach(fs -> {
+            facultySubjectDTOs.forEach(fs -> {
                 for (Subject s : subjects) {
                     if (fs.getSubjectID() == s.getId())
-                        subjectList.add(new SubjectDTO(fs,s));
+                        subjectList.add(new FacultySubject(fs,s));
                 }
             });
         } catch (SQLException e) {

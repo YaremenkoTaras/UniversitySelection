@@ -13,19 +13,10 @@
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
 
-
-
-    <filter>
-        <filter-name>LocalizationFilter</filter-name>
-        <filter-class>com.epam.autum.selection.filter.LocalizationFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LocalizationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
-
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>messages</param-value>
+    </context-param>
 
     <welcome-file-list>
         <welcome-file>WEB-INF\jsp\index.jsp</welcome-file>

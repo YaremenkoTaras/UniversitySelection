@@ -1,7 +1,7 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.dto.ApplicationDTO;
-import com.epam.autum.selection.database.dto.SubjectDTO;
+import com.epam.autum.selection.database.entity.Application;
+import com.epam.autum.selection.database.entity.FacultySubject;
 import com.epam.autum.selection.database.entity.Faculty;
 import com.epam.autum.selection.database.entity.User;
 import com.epam.autum.selection.exception.LogicException;
@@ -60,7 +60,7 @@ public class CommandShowFaculty implements ICommand {
         int id = Integer.parseInt(request.getParameter(ID));
 
         Faculty faculty = FacultyLogic.findFacultyByID(id);
-        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
+        List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
 
         request.setAttribute(FACULTY, faculty);
         request.setAttribute(APPLICATIONS, applications);
@@ -73,9 +73,9 @@ public class CommandShowFaculty implements ICommand {
         int userID = user.getId();
 
         Faculty faculty = FacultyLogic.findFacultyByID(id);
-        List<SubjectDTO> subjects = SubjectLogic.getSubjectsByFaculty(id);
-        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByFaculty(id);
-        ApplicationDTO application = ApplicationLogic.findApplication(userID, faculty.getId());;
+        List<FacultySubject> subjects = SubjectLogic.getSubjectsByFaculty(id);
+        List<Application> applications = ApplicationLogic.findApplicationsByFaculty(id);
+        Application application = ApplicationLogic.findApplication(userID, faculty.getId());;
 
         ValidationResult result = ApplicationLogic.checkMarkForFaculty(userID,faculty.getId());
         switch (result){

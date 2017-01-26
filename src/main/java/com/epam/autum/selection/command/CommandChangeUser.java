@@ -16,8 +16,8 @@ import java.io.IOException;
 /**
  * Created by Tapac on 18.01.2017.
  */
-public class CommandChangeUserInfo implements ICommand {
-    private static Logger log = LogManager.getLogger(CommandChangeUserInfo.class);
+public class CommandChangeUser implements ICommand {
+    private static Logger log = LogManager.getLogger(CommandChangeUser.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

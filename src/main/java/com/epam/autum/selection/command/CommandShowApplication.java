@@ -1,6 +1,5 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.dto.ApplicationDTO;
 import com.epam.autum.selection.database.entity.Application;
 import com.epam.autum.selection.database.entity.User;
 import com.epam.autum.selection.exception.LogicException;
@@ -39,11 +38,11 @@ public class CommandShowApplication implements ICommand {
         int appID = Integer.parseInt(request.getParameter(ADDITIONAL));
 
         Application application = ApplicationLogic.findApplication(appID);
-        User user = UserLogic.findUser(application.getUserID()).get();
-        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByUser(user.getId());
+        User user = UserLogic.findUser(application.getUser().getId()).get();
+        List<Application> applications = ApplicationLogic.findApplicationsByUser(user.getId());
 
         request.setAttribute(APPLICANT, user);
-        request.setAttribute(USER_APPLICATION,application);
+        request.setAttribute(USER_APPLICATION, application);
         request.setAttribute(APPLICATIONS,applications);
     }
 }

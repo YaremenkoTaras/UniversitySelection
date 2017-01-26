@@ -1,6 +1,6 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.dto.MarkDTO;
+import com.epam.autum.selection.database.entity.ApplicantMark;
 import com.epam.autum.selection.database.entity.Subject;
 import com.epam.autum.selection.database.entity.User;
 import com.epam.autum.selection.exception.LogicException;
@@ -51,7 +51,7 @@ public class CommandAddMark implements ICommand {
     private void loadAttributes(HttpServletRequest request, HttpServletResponse response){
         int userID = ((User) request.getSession().getAttribute(USER)).getId();
         List<Subject> subjectList = null;
-        List<MarkDTO> marks = null;
+        List<ApplicantMark> marks = null;
         List<Subject> subjectRemain = new ArrayList<>();
 
         try {
@@ -62,7 +62,7 @@ public class CommandAddMark implements ICommand {
         }
         for (Subject subj : subjectList) {
             boolean res = false;
-            for (MarkDTO mark : marks) {
+            for (ApplicantMark mark : marks) {
                 if (subj.getName().equals(mark.getSubject())) {
                     res = true;
                 }

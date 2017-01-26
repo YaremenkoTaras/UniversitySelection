@@ -2,7 +2,7 @@ package com.epam.autum.selection.database.dao.implementation.mysql;
 
 import com.epam.autum.selection.database.dao.interfaces.IApplicationDAO;
 import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.entity.Application;
+import com.epam.autum.selection.database.dto.ApplicationDTO;
 import com.epam.autum.selection.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,7 +57,7 @@ public class ApplicationDAO implements IApplicationDAO {
     }
 
     @Override
-    public boolean create(Application entity) throws DAOException {
+    public boolean create(ApplicationDTO entity) throws DAOException {
         boolean created = false;
         try (PreparedStatement st = connection.prepareStatement(INSERT_APPLICATION)) {
 
@@ -73,7 +73,7 @@ public class ApplicationDAO implements IApplicationDAO {
             if (res > 0) {
                 created = true;
                 HelperDAO.getInstance().updateId(connection, entity);
-                log.info("Application " + entity + " created");
+                log.info("ApplicationDTO " + entity + " created");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -83,7 +83,7 @@ public class ApplicationDAO implements IApplicationDAO {
 
     @Override
     public List findAll() throws DAOException {
-        List<Application> allApp = new ArrayList<>();
+        List<ApplicationDTO> allApp = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_ALL)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -95,7 +95,7 @@ public class ApplicationDAO implements IApplicationDAO {
                 Integer userID = rs.getInt(USER_ID);
                 Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
 
-                Application app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                ApplicationDTO app = new ApplicationDTO(id,date,desc,over,facultyID,userID,statusID);
                 allApp.add(app);
             }
             log.info("All appclications retrieved");
@@ -107,7 +107,7 @@ public class ApplicationDAO implements IApplicationDAO {
 
     @Override
     public Optional findEntityById(int id) throws DAOException {
-        Application app = null;
+        ApplicationDTO app = null;
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_ID)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
@@ -119,10 +119,10 @@ public class ApplicationDAO implements IApplicationDAO {
                 Integer userID = rs.getInt(USER_ID);
                 Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
 
-                app = new Application(id,date,desc,over,facultyID,userID,statusID);
-                log.info("Application [id = " + id + "] found");
+                app = new ApplicationDTO(id,date,desc,over,facultyID,userID,statusID);
+                log.info("ApplicationDTO [id = " + id + "] found");
             } else {
-                log.info("Application [id = " + id + "] not found");
+                log.info("ApplicationDTO [id = " + id + "] not found");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -132,7 +132,7 @@ public class ApplicationDAO implements IApplicationDAO {
 
     @Override
     public Optional findApplicationByUserFaculty(int userID, int facultyID) throws DAOException {
-        Application app = null;
+        ApplicationDTO app = null;
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_USER_FACULTY)) {
             st.setInt(1, userID);
             st.setInt(2, facultyID);
@@ -144,10 +144,10 @@ public class ApplicationDAO implements IApplicationDAO {
                 Integer over = rs.getInt(OVERALL);
                 Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
 
-                app = new Application(id,date,desc,over,facultyID,userID,statusID);
-                log.info("User Application for faculty found, [id = " + id + "]");
+                app = new ApplicationDTO(id,date,desc,over,facultyID,userID,statusID);
+                log.info("User ApplicationDTO for faculty found, [id = " + id + "]");
             } else {
-                log.info("User Application for faculty not found");
+                log.info("User ApplicationDTO for faculty not found");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -162,7 +162,7 @@ public class ApplicationDAO implements IApplicationDAO {
             st.setInt(1, id);
             rows = st.executeUpdate();
             if (rows > 0) {
-                log.info("Application [id = " + id + "] deleted");
+                log.info("ApplicationDTO [id = " + id + "] deleted");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -171,8 +171,8 @@ public class ApplicationDAO implements IApplicationDAO {
     }
 
     @Override
-    public List<Application> findApplicationsByUser(int userID) throws DAOException {
-        List<Application> allApp = new ArrayList<>();
+    public List<ApplicationDTO> findApplicationsByUser(int userID) throws DAOException {
+        List<ApplicationDTO> allApp = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_USER)) {
             st.setInt(1,userID);
             ResultSet rs = st.executeQuery();
@@ -184,7 +184,7 @@ public class ApplicationDAO implements IApplicationDAO {
                 Integer facultyID = rs.getInt(FACULTY_ID);
                 Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
 
-                Application app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                ApplicationDTO app = new ApplicationDTO(id,date,desc,over,facultyID,userID,statusID);
                 allApp.add(app);
             }
             log.info("Appclications by user retrieved");
@@ -195,8 +195,8 @@ public class ApplicationDAO implements IApplicationDAO {
     }
 
     @Override
-    public List<Application> findApplicationsByFaculty(int facultyID) throws DAOException {
-        List<Application> allApp = new ArrayList<>();
+    public List<ApplicationDTO> findApplicationsByFaculty(int facultyID) throws DAOException {
+        List<ApplicationDTO> allApp = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_FACULTY)) {
             st.setInt(1,facultyID);
             ResultSet rs = st.executeQuery();
@@ -208,7 +208,7 @@ public class ApplicationDAO implements IApplicationDAO {
                 Integer userID = rs.getInt(USER_ID);
                 Integer statusID = rs.getInt(APPLICATION_STATUS_ID);
 
-                Application app = new Application(id,date,desc,over,facultyID,userID,statusID);
+                ApplicationDTO app = new ApplicationDTO(id,date,desc,over,facultyID,userID,statusID);
                 allApp.add(app);
             }
             log.info("Appclications by faculty retrieved");
@@ -219,7 +219,7 @@ public class ApplicationDAO implements IApplicationDAO {
     }
 
     @Override
-    public boolean update(Application entity) throws DAOException {
+    public boolean update(ApplicationDTO entity) throws DAOException {
         boolean update = false;
         try (PreparedStatement st = connection.prepareStatement(UPDATE_STATUS)) {
             st.setInt(1, entity.getStatusID());
@@ -227,7 +227,7 @@ public class ApplicationDAO implements IApplicationDAO {
             int updated = st.executeUpdate();
             if (updated > 0) {
                 update = true;
-                log.info("Application id=" + entity.getId() + " updated");
+                log.info("ApplicationDTO id=" + entity.getId() + " updated");
             }
         } catch (SQLException e) {
             throw new DAOException(e);

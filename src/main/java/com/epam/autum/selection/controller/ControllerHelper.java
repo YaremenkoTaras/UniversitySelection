@@ -6,10 +6,6 @@ import com.epam.autum.selection.command.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-/**
- * Created by Тарас on 08.01.2017.
- */
-
 public class ControllerHelper {
     private static ControllerHelper instance = null;
     HashMap<String, ICommand> commands = new HashMap<>();
@@ -25,7 +21,7 @@ public class ControllerHelper {
         commands.put("showApplication", new CommandShowApplication());
         commands.put("addApplication", new CommandAddApplication());
         commands.put("addMark", new CommandAddMark());
-        commands.put("changeUserInfo", new CommandChangeUserInfo());
+        commands.put("changeUserInfo", new CommandChangeUser());
         commands.put("logout", new CommandLogout());
         commands.put("processApplication", new CommandProcessApplication());
         commands.put("changeLanguage", new CommandChangeLanguage());

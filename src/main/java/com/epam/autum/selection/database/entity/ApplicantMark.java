@@ -1,25 +1,29 @@
 package com.epam.autum.selection.database.entity;
 
-/**
- * Created by Tapac on 02.01.2017.
- */
+import com.epam.autum.selection.database.dto.ApplicantMarkDTO;
+
 public class ApplicantMark extends Entity{
 
     private Integer mark;
-    private Integer userID;
-    private Integer subjectID;
+    private User user;
+    private Subject  subject;
 
     public ApplicantMark() {
     }
 
-    public ApplicantMark(int id, Integer mark, Integer userID, Integer subjectID) {
-
+    public ApplicantMark(Integer id, Integer mark, User user, Subject subject) {
         super(id);
         this.mark = mark;
-        this.userID = userID;
-        this.subjectID = subjectID;
+        this.user = user;
+        this.subject = subject;
     }
 
+    public ApplicantMark(ApplicantMarkDTO mark, User user , Subject subject){
+        setId(mark.getId());
+        setMark(mark.getMark());
+        setUser(user);
+        setSubject(subject);
+    }
     public Integer getMark() {
         return mark;
     }
@@ -28,29 +32,30 @@ public class ApplicantMark extends Entity{
         this.mark = mark;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getSubjectID() {
-        return subjectID;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setSubjectID(Integer subjectID) {
-        this.subjectID = subjectID;
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     @Override
     public String toString() {
         return "ApplicantMark{" +
-                "ID=" + getId() +
+                "id=" + super.getId() +
                 ", mark=" + mark +
-                ", userID=" + userID +
-                ", subjectID=" + subjectID +
+                ", user=" + user +
+                ", subject='" + subject + '\'' +
                 '}';
     }
 
@@ -59,17 +64,17 @@ public class ApplicantMark extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ApplicantMark that = (ApplicantMark) o;
+        ApplicantMark applicantMark = (ApplicantMark) o;
 
-        if (!mark.equals(that.mark)) return false;
-        return subjectID.equals(that.subjectID);
+        if (!getMark().equals(applicantMark.getMark())) return false;
+        return getSubject().equals(applicantMark.getSubject());
 
     }
 
     @Override
     public int hashCode() {
-        int result = mark.hashCode();
-        result = 31 * result + subjectID.hashCode();
+        int result = getMark().hashCode();
+        result = 31 * result + getSubject().hashCode();
         return result;
     }
 }

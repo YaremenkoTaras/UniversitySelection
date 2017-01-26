@@ -1,37 +1,40 @@
 package com.epam.autum.selection.database.entity;
 
-/**
- * Created by Tapac on 02.01.2017.
- */
-public class FacultySubject {
+import com.epam.autum.selection.database.dto.FacultySubjectDTO;
 
-    private Integer facultyID;
-    private Integer subjectID;
+public class FacultySubject {
+    private Integer faculty;
+    private Subject subject;
     private Integer minMark;
 
     public FacultySubject() {
     }
 
-    public FacultySubject(Integer facultyID, Integer subjectID, Integer minMark) {
-        this.facultyID = facultyID;
-        this.subjectID = subjectID;
+    public FacultySubject(Integer facultyID, Subject subject, Integer minMark) {
+        this.faculty = facultyID;
+        this.subject = subject;
         this.minMark = minMark;
     }
-
-    public Integer getFacultyID() {
-        return facultyID;
+    public FacultySubject(FacultySubjectDTO facultySubjectDTO, Subject subject) {
+        setFaculty(facultySubjectDTO.getFacultyID());
+        setSubject(subject);
+        setMinMark(facultySubjectDTO.getMinMark());
     }
 
-    public void setFacultyID(Integer facultyID) {
-        this.facultyID = facultyID;
+    public Integer getFaculty() {
+        return faculty;
     }
 
-    public Integer getSubjectID() {
-        return subjectID;
+    public void setFaculty(Integer faculty) {
+        this.faculty = faculty;
     }
 
-    public void setSubjectID(Integer subjectID) {
-        this.subjectID = subjectID;
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Integer getMinMark() {
@@ -45,8 +48,8 @@ public class FacultySubject {
     @Override
     public String toString() {
         return "FacultySubject{" +
-                "facultyID=" + facultyID +
-                ", subjectID=" + subjectID +
+                "faculty=" + faculty +
+                ", subjectID=" + subject +
                 ", minMark='" + minMark + '\'' +
                 '}';
     }

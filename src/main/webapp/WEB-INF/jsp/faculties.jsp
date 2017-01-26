@@ -7,13 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>All faculties ${content.getString("main.title")}</title>
+    <title>All faculties <fmt:message key="main.title"/></title>
 </head>
 <header>
     <div class="container">
-        <h3>${content.getString("faculties.header")}</h3>
+        <h3><fmt:message key="faculties.header"/></h3>
     </div>
 </header>
 <body>
@@ -34,7 +35,7 @@
     <c:if test="${user.roleID == 1}">
         <input type="hidden" name="command" value="showAdmin">
     </c:if>
-    <button type="submit">${content.getString("button.back_to_profile")}</button>
+    <button type="submit"><fmt:message key="button.back_to_profile"/></button>
 </form>
 </body>
 </html>

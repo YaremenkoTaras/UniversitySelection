@@ -1,7 +1,7 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.dto.ApplicationDTO;
-import com.epam.autum.selection.database.dto.MarkDTO;
+import com.epam.autum.selection.database.entity.ApplicantMark;
+import com.epam.autum.selection.database.entity.Application;
 import com.epam.autum.selection.database.entity.User;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.service.ApplicationLogic;
@@ -37,8 +37,8 @@ public class CommandShowApplicant implements ICommand {
 
     private void loadAttributes(HttpServletRequest request, HttpServletResponse response) throws LogicException {
         User user = (User) request.getSession().getAttribute(USER);
-        List<MarkDTO> marks = MarkLogic.getMarksByUser(user.getId());
-        List<ApplicationDTO> applications = ApplicationLogic.findApplicationsByUser(user.getId());
+        List<ApplicantMark> marks = MarkLogic.getMarksByUser(user.getId());
+        List<Application> applications = ApplicationLogic.findApplicationsByUser(user.getId());
         request.setAttribute(MARKS, marks);
         request.setAttribute(APPLICATIONS, applications);
     }

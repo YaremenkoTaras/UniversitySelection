@@ -35,11 +35,11 @@ admin.button.edit_faculty   = Edit faculty information
 
 applicant.profile           = Profile
 applicant.applicant         = Applicant
-applicant.applications_list = Lists of applications
+applicant.applications_list = Lists of applicationDTOs
 applicant.mark              = Mark
 applicant.marks             = Your marks
 applicant.button.add_mark   = Add mark
-applicant.button.add        = Submit a new application
+applicant.button.add        = Submit a new applicationDTO
 
 addmark.title           = Add aplicant marks
 addmark.head            = add your marks to profile
@@ -52,18 +52,18 @@ setting.button.edit         = Edit
 setting.name                = Name
 setting.short_name          = Short name
 
-application.date            = Date
-application.description     = Description
-application.overall         = Overall
-application.applicant       = Applicant
-application.faculty         = Faculty
-application.status          = Status
-application.title           = Application
-application.process         = Application in process
-application.accepted        = Accepted applications
-application.button.accept   = Accept  application
-application.button.decline  = Decline application
-application.button.back     = Back to faculty
+applicationDTO.date            = Date
+applicationDTO.description     = Description
+applicationDTO.overall         = Overall
+applicationDTO.applicant       = Applicant
+applicationDTO.faculty         = Faculty
+applicationDTO.status          = Status
+applicationDTO.title           = Application
+applicationDTO.process         = Application in process
+applicationDTO.accepted        = Accepted applicationDTOs
+applicationDTO.button.accept   = Accept  applicationDTO
+applicationDTO.button.decline  = Decline applicationDTO
+applicationDTO.button.back     = Back to faculty
 
 status.accept       = ACCEPT
 status.process      = PROCESS
@@ -77,13 +77,13 @@ faculty.total               = The total number recruitment
 faculty.missmark            = You don`t have all needed mark!
 faculty.lowmark             = You have a low mark to add Application
 faculty.add_application     = Add Application for this faculty
-faculty.user_application    = You have added application for this faculty
+faculty.user_application    = You have added applicationDTO for this faculty
 faculty.subject             = Subject
 faculty.min_mark            = Minimal mark
 faculty.button.back         = Back to faculties list
 
-faculty.commission.show_app = Show application
-faculty.commission.watch    = Watch application
+faculty.commission.show_app = Show applicationDTO
+faculty.commission.watch    = Watch applicationDTO
 
 change.user                 = Edit profile
 change.button.confirm       = Confirm changes

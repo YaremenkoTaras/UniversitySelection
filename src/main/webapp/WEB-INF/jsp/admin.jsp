@@ -7,14 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>${content.getString("admin.head")} : ${user.name} ${content.getString("main.title")}</title>
+    <title><fmt:message key="admin.head"/> : ${user.name} <fmt:message key="main.title"/></title>
 </head>
 
 <body>
 
-<h3>${content.getString("admin.header")} - ${user.name}</h3>
+<h3><fmt:message key="admin.header"/> - ${user.name}</h3>
 
 <br>
 
@@ -28,7 +29,7 @@
 <form method="POST" action="Controller">
     <input type="hidden" name="command" value="changeUserInfo"/>
     <input type="hidden" name="additional" value="edit">
-    <input type="submit" value="${content.getString("button.edit")}">
+    <input type="submit" value="<fmt:message key="button.edit"/>">
 </form>
 
 <br>
@@ -36,14 +37,14 @@
 <form action="/Controller" method="post">
     <input type="hidden" name="command" value="register">
     <input type="hidden" name="additional" value="admin">
-    <button type="submit">${content.getString("admin.button.create_admin")}</button>
+    <button type="submit"><fmt:message key="admin.button.create_admin"/></button>
 </form>
 
 <br>
 
 <form method="post" action="/Controller">
     <input type="hidden" name="command" value="logout"/>
-    <input type="submit" value="${content.getString("button.logout")}">
+    <input type="submit" value="<fmt:message key="button.logout"/>">
 </form>
 
 

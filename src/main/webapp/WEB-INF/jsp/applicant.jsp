@@ -7,15 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>${content.getString("applicant.applicant")} : ${user.name} ${content.getString("main.title")}</title>
+    <title><fmt:message key="applicant.applicant"/>: ${user.name} <fmt:message key="main.title"/> </title>
 </head>
 <body>
 <form>
-    <h4>${content.getString("applicant.profile")}: ${user.name}</h4>
+    <h4><fmt:message key="applicant.profile"/>: ${user.name}</h4>
     <br>
-    ${content.getString("applicant.marks")}
+    <fmt:message key="applicant.marks"/>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>Subject</td>
@@ -24,7 +25,7 @@
 
         <c:forEach var="value" items="${marks}">
             <tr>
-                <td>${value.subject}</td>
+                <td>${value.subject.name}</td>
                 <td>${value.mark}</td>
             </tr>
         </c:forEach>
@@ -32,30 +33,30 @@
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="addMark"/>
         <input type="hidden" name="additional" value="show">
-        <input type="submit" value="${content.getString("applicant.button.add_mark")}">
+        <input type="submit" value="<fmt:message key="applicant.button.add_mark"/>">
     </form>
     <br>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="changeUserInfo"/>
         <input type="hidden" name="additional" value="edit">
-        <input type="submit" value="${content.getString("button.edit")}">
+        <input type="submit" value="<fmt:message key="button.edit"/>">
     </form>
 
 </form>
 <br>
 <form>
-    <h4>${content.getString("applicant.applications_list")}</h4>
+    <h4><fmt:message key="applicant.applications_list"/></h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
-            <td>${content.getString("application.faculty")}</td>
-            <td>${content.getString("application.overall")}</td>
-            <td>${content.getString("application.date")}</td>
-            <td>${content.getString("application.status")}</td>
-            <td>${content.getString("application.description")}</td>
+            <td><fmt:message key="application.applicant"/></td>
+            <td><fmt:message key="application.overall"/></td>
+            <td><fmt:message key="application.date"/></td>
+            <td><fmt:message key="application.status"/></td>
+            <td><fmt:message key="application.description"/></td>
         </tr>
         <c:forEach  var="app" items="${applications}">
             <tr>
-                <td>${app.faculty}</td>
+                <td>${app.faculty.name}</td>
                 <td>${app.overall}</td>
                 <td>${app.date}</td>
                 <td>${app.status}</td>
@@ -66,12 +67,12 @@
     <br>
     <form method="POST" action="Controller">
         <input type="hidden" name="command" value="showFaculties"/>
-        <input type="submit" value="${content.getString("applicant.button.add")}">
+        <input type="submit" value="<fmt:message key="applicant.button.add"/>">
     </form>
 
     <form method="post" action="/Controller">
         <input type="hidden" name="command" value="logout"/>
-        <input type="submit" value="${content.getString("button.logout")}">
+        <input type="submit" value="<fmt:message key="button.logout"/>">
     </form>
 
 </form>

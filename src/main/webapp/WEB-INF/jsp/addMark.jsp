@@ -7,14 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>${content.getString("addmark.title")} ${content.getString("main.title")}</title>
+    <title><fmt:message key="addmark.title"/> <fmt:message key="main.title"/></title>
 </head>
 <body>
-<h3>${user.name} ${content.getString("addmark.head")} :</h3>
+<h3>${user.name} <fmt:message key="addmark.head"/> :</h3>
 <form>
-    ${content.getString("applicant.marks")}
+    <fmt:message key="applicant.marks"/>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
             <td>Subject</td>
@@ -22,7 +23,7 @@
         </tr>
         <c:forEach var="value" items="${marks}">
             <tr>
-                <td>${value.subject}</td>
+                <td>${value.subject.name}</td>
                 <td>${value.mark}</td>
             </tr>
         </c:forEach>
@@ -36,17 +37,17 @@
         </c:forEach>
     </select>
 
-    <input class="col-xs-2 form-control validate" placeholder="100" type="number" min="100" max="200"
+    <input class="col-xs-2 form-control validate" placeholder="100" type="number" min="1" max="200"
            value="" name="mark" id="form2" required pattern="[0-9]{3}">
     </input>
     <input type="hidden" name="command" value="addMark"/>
     <input type="hidden" name="additional" value="add"/>
-    <button name="submit" id="add_submit_btn" class="btn col-xs-4">${content.getString("addmark.add")}</button>
+    <button name="submit" id="add_submit_btn" class="btn col-xs-4"><fmt:message key="addmark.add"/></button>
 </form>
 <br>
 <form method="POST" action="Controller">
     <input type="hidden" name="command" value="showApplicant"/>
-    <button name="submit">${content.getString("button.back_to_profile")}</button>
+    <button name="submit"><fmt:message key="button.back_to_profile"/></button>
 </form>
 
 </body>

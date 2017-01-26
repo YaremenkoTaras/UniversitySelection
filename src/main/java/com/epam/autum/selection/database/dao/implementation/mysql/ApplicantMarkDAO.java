@@ -2,7 +2,7 @@ package com.epam.autum.selection.database.dao.implementation.mysql;
 
 import com.epam.autum.selection.database.dao.interfaces.IApplicantMarkDAO;
 import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.entity.ApplicantMark;
+import com.epam.autum.selection.database.dto.ApplicantMarkDTO;
 import com.epam.autum.selection.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,7 +51,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
 
 
     @Override
-    public boolean create(ApplicantMark entity) throws DAOException {
+    public boolean create(ApplicantMarkDTO entity) throws DAOException {
         boolean created = false;
         try (PreparedStatement st = connection.prepareStatement(INSERT_APPLICANT_MARK)) {
             st.setInt(1, entity.getMark());
@@ -61,7 +61,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
             if (res > 0) {
                 created = true;
                 HelperDAO.getInstance().updateId(connection, entity);
-                log.info("Mark " + entity + " created");
+                log.info("ApplicantMarkDTO " + entity + " created");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -70,8 +70,8 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
     }
 
     @Override
-    public List<ApplicantMark> findAll() throws DAOException {
-        List<ApplicantMark> allMarks = new ArrayList<>();
+    public List<ApplicantMarkDTO> findAll() throws DAOException {
+        List<ApplicantMarkDTO> allMarks = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_ALL)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -80,7 +80,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
                 int userID = rs.getInt(USER_ID);
                 int subjectID = rs.getInt(SUBJECT_ID);
 
-                ApplicantMark appMark = new ApplicantMark(id,mark,userID,subjectID);
+                ApplicantMarkDTO appMark = new ApplicantMarkDTO(id,mark,userID,subjectID);
                 allMarks.add(appMark);
             }
             log.info("All marks retrieved");
@@ -92,7 +92,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
 
     @Override
     public Optional findEntityById(int id) throws DAOException {
-        ApplicantMark appMark = null;
+        ApplicantMarkDTO appMark = null;
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_ID)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
@@ -101,10 +101,10 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
                 int userID = rs.getInt(USER_ID);
                 int subjectID = rs.getInt(SUBJECT_ID);
 
-                appMark = new ApplicantMark(id,mark,userID,subjectID);
-                log.info("Mark [id = " + id + "] found");
+                appMark = new ApplicantMarkDTO(id,mark,userID,subjectID);
+                log.info("ApplicantMarkDTO [id = " + id + "] found");
             } else {
-                log.info("Mark [id = " + id + "] not found");
+                log.info("ApplicantMarkDTO [id = " + id + "] not found");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -119,7 +119,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
             st.setInt(1, id);
             rows = st.executeUpdate();
             if (rows > 0) {
-                log.info("Mark [id = " + id + "] deleted");
+                log.info("ApplicantMarkDTO [id = " + id + "] deleted");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -128,7 +128,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
     }
 
     @Override
-    public boolean update(ApplicantMark entity) throws DAOException {
+    public boolean update(ApplicantMarkDTO entity) throws DAOException {
 
         String sqlQuery = UPDATE_FACULTY;
         boolean update = false;
@@ -141,7 +141,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
             int updated = st.executeUpdate();
             if (updated > 0) {
                 update = true;
-                log.info("Mark " + entity + " updated");
+                log.info("ApplicantMarkDTO " + entity + " updated");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -150,8 +150,8 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
     }
 
     @Override
-    public List<ApplicantMark> findMarkByUser(int userID) throws DAOException {
-        List<ApplicantMark> markList = new ArrayList<>();
+    public List<ApplicantMarkDTO> findMarkByUser(int userID) throws DAOException {
+        List<ApplicantMarkDTO> markList = new ArrayList<>();
 
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_USER_ID)){
             st.setInt(1,userID);
@@ -161,7 +161,7 @@ public class ApplicantMarkDAO implements IApplicantMarkDAO {
                 int mark = rs.getInt(MARK);
                 int subjectID = rs.getInt(SUBJECT_ID);
 
-                ApplicantMark appMark = new ApplicantMark(id,mark,userID,subjectID);
+                ApplicantMarkDTO appMark = new ApplicantMarkDTO(id,mark,userID,subjectID);
                 markList.add(appMark);
             }
             log.info("All user marks retrieved");

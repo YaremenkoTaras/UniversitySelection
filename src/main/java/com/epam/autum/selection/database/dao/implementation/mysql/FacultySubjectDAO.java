@@ -2,7 +2,7 @@ package com.epam.autum.selection.database.dao.implementation.mysql;
 
 import com.epam.autum.selection.database.dao.interfaces.IFacultySubjectDAO;
 import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.entity.FacultySubject;
+import com.epam.autum.selection.database.dto.FacultySubjectDTO;
 import com.epam.autum.selection.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 public class FacultySubjectDAO implements IFacultySubjectDAO {
 
-    private static Logger log = LogManager.getLogger(FacultySubject.class);
+    private static Logger log = LogManager.getLogger(FacultySubjectDTO.class);
 
     private WrapperConnection connection;
     private static FacultySubjectDAO instance;
@@ -52,7 +52,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public boolean delete(FacultySubject subject) throws DAOException {
+    public boolean delete(FacultySubjectDTO subject) throws DAOException {
         int id1 = subject.getFacultyID();
         int id2 = subject.getSubjectID();
         int rows;
@@ -70,7 +70,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public boolean create(FacultySubject entity) throws DAOException {
+    public boolean create(FacultySubjectDTO entity) throws DAOException {
         boolean created = false;
         if (!checkEntity(entity.getFacultyID(), entity.getSubjectID()))
             try (PreparedStatement st = connection.prepareStatement(INSERT_FACULTY_SUBJECT)) {
@@ -105,8 +105,8 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public List<FacultySubject> findAll() throws DAOException {
-        List<FacultySubject> allSubjects = new ArrayList<>();
+    public List<FacultySubjectDTO> findAll() throws DAOException {
+        List<FacultySubjectDTO> allSubjects = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_ALL)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -114,7 +114,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
                 int sID = rs.getInt(SUBJECT_ID);
                 int minMark = rs.getInt(MIN_MARK);
 
-                FacultySubject subject = new FacultySubject(fID, sID, minMark);
+                FacultySubjectDTO subject = new FacultySubjectDTO(fID, sID, minMark);
                 allSubjects.add(subject);
             }
             log.info("All faculty subjects retrieved");
@@ -125,8 +125,8 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public List<FacultySubject> findSubjectsByFaculty(int facultyID) throws DAOException {
-        List<FacultySubject> allSubjects = new ArrayList<>();
+    public List<FacultySubjectDTO> findSubjectsByFaculty(int facultyID) throws DAOException {
+        List<FacultySubjectDTO> allSubjects = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(SELECT_BY_FACULTY)) {
             st.setInt(1, facultyID);
             ResultSet rs = st.executeQuery();
@@ -134,7 +134,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
                 int sID = rs.getInt(SUBJECT_ID);
                 int minMark = rs.getInt(MIN_MARK);
 
-                FacultySubject subject = new FacultySubject(facultyID, sID, minMark);
+                FacultySubjectDTO subject = new FacultySubjectDTO(facultyID, sID, minMark);
                 allSubjects.add(subject);
             }
             log.info("Faculty  [id = " + facultyID + "] subjects found");
@@ -145,8 +145,8 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public Optional<FacultySubject> findEntityById(int facultyID, int subjectID) throws DAOException {
-        FacultySubject minMark = null;
+    public Optional<FacultySubjectDTO> findEntityById(int facultyID, int subjectID) throws DAOException {
+        FacultySubjectDTO minMark = null;
         try (PreparedStatement st = connection.prepareStatement(SELECT_MIN_MARK_BY_KEY)) {
             st.setInt(1, facultyID);
             st.setInt(2, subjectID);
@@ -154,7 +154,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
             if (rs.next()) {
                 int mark = rs.getInt(MIN_MARK);
 
-                minMark = new FacultySubject(facultyID, subjectID, mark);
+                minMark = new FacultySubjectDTO(facultyID, subjectID, mark);
                 log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID + "] found");
             } else {
                 log.info("Minimal mark  [faculty_id = " + facultyID + ", subject_id= " + subjectID + "] not found");
@@ -166,7 +166,7 @@ public class FacultySubjectDAO implements IFacultySubjectDAO {
     }
 
     @Override
-    public boolean updateMinMark(FacultySubject entity) throws DAOException {
+    public boolean updateMinMark(FacultySubjectDTO entity) throws DAOException {
 
         String sqlQuery = UPDATE;
         boolean update = false;

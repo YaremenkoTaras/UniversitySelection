@@ -1,18 +1,15 @@
 package com.epam.autum.selection.database.dao.interfaces;
 
-import com.epam.autum.selection.database.entity.Application;
+import com.epam.autum.selection.database.dto.ApplicationDTO;
 import com.epam.autum.selection.exception.DAOException;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Tapac on 02.01.2017.
- */
-public interface IApplicationDAO extends IDAO<Application>{
+public interface IApplicationDAO extends IDAO<ApplicationDTO>{
 
-    List<Application> findApplicationsByUser(int userID) throws DAOException;
-    List<Application> findApplicationsByFaculty(int facultyID) throws DAOException;
-    Optional<Application> findApplicationByUserFaculty(int userID, int facultyID) throws DAOException;
+    List<ApplicationDTO> findApplicationsByUser(int userID) throws DAOException;
+    List<ApplicationDTO> findApplicationsByFaculty(int facultyID) throws DAOException;
+    Optional<ApplicationDTO> findApplicationByUserFaculty(int userID, int facultyID) throws DAOException;
 
 }
