@@ -48,7 +48,7 @@
     <h4><fmt:message key="applicant.applications_list"/></h4>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
-            <td><fmt:message key="application.applicant"/></td>
+            <td><fmt:message key="application.faculty"/></td>
             <td><fmt:message key="application.overall"/></td>
             <td><fmt:message key="application.date"/></td>
             <td><fmt:message key="application.status"/></td>

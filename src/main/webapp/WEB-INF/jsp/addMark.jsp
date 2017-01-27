@@ -11,6 +11,7 @@
 <html>
 <head>
     <title><fmt:message key="addmark.title"/> <fmt:message key="main.title"/></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
 <h3>${user.name} <fmt:message key="addmark.head"/> :</h3>

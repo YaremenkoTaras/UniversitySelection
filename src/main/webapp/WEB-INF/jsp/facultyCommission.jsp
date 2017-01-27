@@ -24,7 +24,6 @@
             <td><fmt:message key="application.applicant"/></td>
             <td><fmt:message key="application.overall"/></td>
             <td><fmt:message key="application.date"/></td>
-            <td><fmt:message key="application.status"/></td>
             <td><fmt:message key="application.description"/></td>
         </tr>
         <c:forEach var="app" items="${applications}">
@@ -33,7 +32,6 @@
                     <td>${app.user.name}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.status}</td>
                     <td>${app.description}</td>
                 </tr>
             </c:if>
@@ -48,7 +46,6 @@
             <td><fmt:message key="application.applicant"/></td>
             <td><fmt:message key="application.overall"/></td>
             <td><fmt:message key="application.date"/></td>
-            <td><fmt:message key="application.status"/></td>
             <td><fmt:message key="application.description"/></td>
             <td><fmt:message key="faculty.commission.watch"/></td>
         </tr>
@@ -58,7 +55,6 @@
                     <td>${app.user.name}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.status}</td>
                     <td>${app.description}</td>
                     <td>
                         <form action="/Controller" method="post">

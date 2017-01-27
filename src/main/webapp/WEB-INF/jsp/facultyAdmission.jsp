@@ -11,13 +11,14 @@
 <html>
 <head>
     <title><fmt:message key="faculty"/>: ${faculty.name} <fmt:message key="main.title"/></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <header>
     <h3>${faculty.name}</h3>
     <h4><fmt:message key="faculty.total"/>: ${faculty.numberOfStudent}</h4>
 </header>
 
-<body>
+<body class="container">
 <form name="form_faculty_subjects">
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>
@@ -35,7 +36,7 @@
 
 
 <form name="form_add_application">
-    <c:if test="${user.roleID == 2 && userapp == null && missingmark == null && lowmark == null}">
+    <c:if test="${userapp == null && missingmark == null && lowmark == null}">
         <div class="container">
             <form action="/Controller" method="post">
                 <input type="hidden" name="command" value="addApplication"/>
@@ -55,7 +56,7 @@
         <h4><fmt:message key="faculty.lowmark"/></h4>
     </c:if>
 
-    <c:if test="${user.roleID == 2 && userapp != null}">
+    <c:if test="${userapp != null}">
         <h4><fmt:message key="faculty.user_application"/> ${userapp.date}</h4>
     </c:if>
 </form>
@@ -63,21 +64,21 @@
 
 <form name="form_accepted_applications">
     <h4><fmt:message key="application.accepted"/></h4>
-    <table border="1" cellspacing="0" cellpadding="2">
+    <table class="table" border="1" cellspacing="0" cellpadding="2">
+        <thead>
         <tr>
-            <td><fmt:message key="application.applicant"/></td>
-            <td><fmt:message key="application.overall"/></td>
-            <td><fmt:message key="application.date"/></td>
-            <td><fmt:message key="application.status"/></td>
-            <td><fmt:message key="application.description"/></td>
+            <th><fmt:message key="application.applicant"/></th>
+            <th><fmt:message key="application.overall"/></th>
+            <th><fmt:message key="application.date"/></th>
+            <th><fmt:message key="application.description"/></th>
         </tr>
+        </thead>
         <c:forEach var="app" items="${applications}">
             <c:if test="${app.isAccept()}">
                 <tr>
                     <td>${app.user.name}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.status}</td>
                     <td>${app.description}</td>
                 </tr>
             </c:if>
@@ -92,7 +93,6 @@
             <td><fmt:message key="application.applicant"/></td>
             <td><fmt:message key="application.overall"/></td>
             <td><fmt:message key="application.date"/></td>
-            <td><fmt:message key="application.status"/></td>
             <td><fmt:message key="application.description"/></td>
         </tr>
         <c:forEach var="app" items="${applications}">
@@ -101,7 +101,6 @@
                     <td>${app.user.name}</td>
                     <td>${app.overall}</td>
                     <td>${app.date}</td>
-                    <td>${app.status}</td>
                     <td>${app.description}</td>
                 </tr>
             </c:if>
