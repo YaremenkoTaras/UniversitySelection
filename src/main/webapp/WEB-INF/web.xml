@@ -4,6 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.epam.autum.selection.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>com.epam.autum.selection.controller.Controller</servlet-class>
@@ -21,6 +31,7 @@
     <welcome-file-list>
         <welcome-file>WEB-INF\jsp\index.jsp</welcome-file>
     </welcome-file-list>
+
 
     <session-config>
         <session-timeout>
