@@ -63,7 +63,7 @@ public class CommandAddMark implements ICommand {
         for (Subject subj : subjectList) {
             boolean res = false;
             for (ApplicantMark mark : marks) {
-                if (subj.getName().equals(mark.getSubject())) {
+                if (subj.getName().equals(mark.getSubject().getName())) {
                     res = true;
                 }
             }

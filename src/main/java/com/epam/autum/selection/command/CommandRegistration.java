@@ -42,7 +42,7 @@ public class CommandRegistration implements ICommand {
                 reloadAttributes(request, response);
                 page = PageConfigurator.getConfigurator().getPage(PageConfigurator.REGISTRATION_PAGE);
                 request.setAttribute(ID, request.getParameter(ID));
-                request.setAttribute(REGISTER, "Email already register. Try to SignIn!");
+                request.setAttribute(REGISTER, true);
                 break;
             case UNKNOWN_ERROR:
                 log.error("Register:" + ValidationResult.UNKNOWN_ERROR);
