@@ -14,42 +14,66 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<h3>${user.name} <fmt:message key="addmark.head"/> :</h3>
-<form>
-    <fmt:message key="applicant.marks"/>
-    <table border="1" cellspacing="0" cellpadding="2">
-        <tr>
-            <td>Subject</td>
-            <td>Mark</td>
-        </tr>
-        <c:forEach var="value" items="${marks}">
-            <tr>
-                <td>${value.subject.name}</td>
-                <td>${value.mark}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</form>
-<br>
-<form>
-    <select name="subject" size="1" required>
-        <c:forEach var="subj" items="${subjects}">
-            <option value="${subj.id}">${subj.name}</option>
-        </c:forEach>
-    </select>
+<div class="container col-xs-8">
 
-    <input class="col-xs-2 form-control validate" placeholder="100" type="number" min="1" max="200"
-           value="" name="mark" id="form2" required pattern="[0-9]{3}">
-    </input>
-    <input type="hidden" name="command" value="addMark"/>
-    <input type="hidden" name="additional" value="add"/>
-    <button name="submit" id="add_submit_btn" class="btn col-xs-4"><fmt:message key="addmark.add"/></button>
-</form>
-<br>
-<form method="POST" action="Controller">
-    <input type="hidden" name="command" value="showApplicant"/>
-    <button name="submit"><fmt:message key="button.back_to_profile"/></button>
-</form>
+    <div class="form-group">
+        <h4><fmt:message key="applicant.marks"/></h4>
+    </div>
+
+    <div class="form-group col-xs-4">
+        <table class="table-info table" border="2" cellspacing="0" cellpadding="2">
+            <thead>
+            <tr>
+                <th><fmt:message key="applicant.subject"/></th>
+                <th><fmt:message key="applicant.mark"/></th>
+            </tr>
+            </thead>
+            <c:forEach var="value" items="${marks}">
+                <tr>
+                    <td>${value.subject.name}</td>
+                    <td>${value.mark}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <h4>${user.name} <fmt:message key="addmark.head"/> :</h4>
+    </div>
+
+    <br>
+    <div class="form-group">
+        <form action="/Controller" method="post">
+            <div class="col-xs-2">
+                <select class="c-select" name="subject" size="1" required>
+                    <c:forEach var="subj" items="${subjects}">
+                        <option value="${subj.id}">${subj.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="col-xs-2">
+                <input class="form-control validate" placeholder="100" type="number" min="1" max="200"
+                       value="" name="mark" id="form2" required pattern="[0-9]{3}">
+                </input>
+            </div>
+            <div class="col-xs-4">
+                <input type="hidden" name="command" value="addMark"/>
+                <input type="hidden" name="additional" value="add"/>
+                <button name="submit" id="add_submit_btn" class="btn"><fmt:message key="addmark.add"/></button>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="clearfix"></div>
+    <br><br>
+    <div class="form-group">
+        <form method="POST" action="Controller">
+            <input type="hidden" name="command" value="showApplicant"/>
+            <button class="btn" name="submit"><fmt:message key="button.back_to_profile"/></button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

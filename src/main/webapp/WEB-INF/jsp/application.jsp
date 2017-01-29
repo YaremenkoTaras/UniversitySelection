@@ -11,12 +11,17 @@
 <html>
 <head>
     <title><fmt:message key="application.title"/>: ${applicant.name} <fmt:message key="main.title"/></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
-<h3><fmt:message key="application.title"/> : ${applicant.name}</h3>
-<form name="form_application">
-    <div class="container">
-        <table border="1" cellspacing="0" cellpadding="2">
+<div class="container col-xs-8">
+    <div class="form-group">
+        <h3><fmt:message key="application.title"/> : ${applicant.name}</h3>
+    </div>
+
+
+    <div class="form-group col-xs-6">
+        <table id="tableApp" class="table" border="2" cellspacing="0" cellpadding="2">
             <tr>
                 <td><fmt:message key="application.applicant"/></td>
                 <td>${applicant.name}</td>
@@ -47,53 +52,63 @@
             </tr>
         </table>
     </div>
-</form>
 
-<form name="form_button">
-    <div class="container">
+    <div class="clearfix"></div>
+
+    <div class="form-group row">
+
+        <div class="col-xs-4">
+            <form action="/Controller" method="post">
+                <input type="hidden" name="command" value="processApplication">
+                <input type="hidden" name="additional" value="accept">
+                <input type="hidden" name="userapp" value="${userapp.id}">
+                <input type="hidden" name="id" value="${userapp.faculty.id}">
+                <button class="btn" type="submit"><fmt:message key="application.button.accept"/></button>
+            </form>
+        </div>
+        <div class="col-xs-4">
+            <form action="/Controller" method="post">
+                <input type="hidden" name="command" value="processApplication">
+                <input type="hidden" name="additional" value="decline">
+                <input type="hidden" name="id" value="${userapp.faculty.id}">
+                <input type="hidden" name="userapp" value="${userapp.id}">
+                <button class="btn" type="submit"><fmt:message key="application.button.decline"/></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="form-group">
+        <h4><fmt:message key="application.all_applicant_app"/></h4>
+        <table class="table" border="2" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><fmt:message key="application.faculty"/></td>
+                <td><fmt:message key="application.overall"/></td>
+                <td><fmt:message key="application.date"/></td>
+                <td><fmt:message key="application.status"/></td>
+                <td><fmt:message key="application.description"/></td>
+            </tr>
+            <c:forEach var="app" items="${applications}">
+                <tr>
+                    <td>${app.faculty.shortName}</td>
+                    <td>${app.overall}</td>
+                    <td>${app.date}</td>
+                    <td>${app.status}</td>
+                    <td>${app.description}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+    <br>
+    <div class="form-group">
         <form action="/Controller" method="post">
-            <input type="hidden" name="command" value="processApplication">
-            <input type="hidden" name="additional" value="accept">
-            <input type="hidden" name="userapp" value="${userapp.id}">
+            <input type="hidden" name="command" value="showFaculty">
             <input type="hidden" name="id" value="${userapp.faculty.id}">
-            <button type="submit"><fmt:message key="application.button.accept"/></button>
-        </form>
-        <form action="/Controller" method="post">
-            <input type="hidden" name="command" value="processApplication">
-            <input type="hidden" name="additional" value="decline">
-            <input type="hidden" name="id" value="${userapp.faculty.id}">
-            <input type="hidden" name="userapp" value="${userapp.id}">
-            <button type="submit"><fmt:message key="application.button.decline"/></button>
+            <button class="btn" type="submit"><fmt:message key="application.button.back"/></button>
         </form>
     </div>
-</form>
 
-<form name="form_all_applications">
-    <table border="1" cellspacing="0" cellpadding="2">
-        <tr>
-            <td><fmt:message key="application.faculty"/></td>
-            <td><fmt:message key="application.overall"/></td>
-            <td><fmt:message key="application.date"/></td>
-            <td><fmt:message key="application.status"/></td>
-            <td><fmt:message key="application.description"/></td>
-        </tr>
-        <c:forEach var="app" items="${applications}">
-            <tr>
-                <td>${app.faculty.shortName}</td>
-                <td>${app.overall}</td>
-                <td>${app.date}</td>
-                <td>${app.status}</td>
-                <td>${app.description}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</form>
-<br>
-<form action="/Controller" method="post">
-    <input type="hidden" name="command" value="showFaculty">
-    <input type="hidden" name="id" value="${userapp.faculty.id}">
-    <button type="submit"><fmt:message key="application.button.back"/></button>
-</form>
-
+</div>
 </body>
 </html>

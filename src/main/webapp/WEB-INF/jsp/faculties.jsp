@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>All faculties <fmt:message key="main.title"/></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <header>
     <div class="container">
@@ -18,24 +19,38 @@
     </div>
 </header>
 <body>
-<div>
-    <form class="container">
-        <c:forEach var="faculty" items="${faculties}">
-            <a href="Controller?command=showFaculty&id=${faculty.id}">
-                <div class="facultyvalue"> ${faculty.name} </div>
-            </a>
-        </c:forEach>
-    </form>
+<div class="container col-xs-6">
+    <div class="form-group">
+        <table class="table">
+            <c:forEach var="faculty" items="${faculties}">
+                <tr>
+                    <td>
+                        <a class="btn-link" href="Controller?command=showFaculty&id=${faculty.id}">
+                            <h4> ${faculty.name} </h4>
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+
+
+        </table>
+
+    </div>
+
+    <br>
+    <div class="form-group">
+        <form action="/Controller" method="post">
+            <c:if test="${user.roleID == 2}">
+                <input type="hidden" name="command" value="showApplicant">
+            </c:if>
+            <c:if test="${user.roleID == 1}">
+                <input type="hidden" name="command" value="showAdmin">
+            </c:if>
+            <button class="btn" type="submit"><fmt:message key="button.back_to_profile"/></button>
+        </form>
+    </div>
+
 </div>
-<br>
-<form class="container" action="/Controller" method="post">
-    <c:if test="${user.roleID == 2}">
-        <input type="hidden" name="command" value="showApplicant">
-    </c:if>
-    <c:if test="${user.roleID == 1}">
-        <input type="hidden" name="command" value="showAdmin">
-    </c:if>
-    <button type="submit"><fmt:message key="button.back_to_profile"/></button>
-</form>
+
 </body>
 </html>
