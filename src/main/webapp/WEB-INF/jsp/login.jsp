@@ -14,7 +14,7 @@
 <body>
 
 <div class="col-xs-6 ">
-    <%@include file="/WEB-INF/languages_locale.jsp" %>
+    <%@include file="/WEB-INF/jsp/languages_locale.jsp" %>
     <div class="container header_text">
         <h1><fmt:message key="login.u_selection"/></h1>
     </div>
