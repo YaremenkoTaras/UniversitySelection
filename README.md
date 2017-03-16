@@ -1,20 +1,42 @@
-# UniversitySelection
-The test project created for EPAM courses
+# Application
 
-TASK
+A simple Web Service for a University Slection
 
+# Description
 
+User is registered as Applicant to University, enters marks for the relevant Subjects and Certificate.
+Then User can make an Application for one of the Faculties with a fixed set-up plan.
+System take summary of all needed subject.
 
-REQUIREMENTS FOR IMPLEMENTATION OF THE PROJECT
+Administrator have list of all Applications to all Faculties.
+Administrator can watch information about Applicant and Accept or Decline the Application.
 
-For information on domain stored in a database (MySQL recommended), for access use JDBC.
-On the basis of the subject area to create classes describing their entities.
-In implementing the business logic used GoF patterns (Factory Method, Command, Singleton, Builder, Strategy) and the Model-View-Controller.
-Using servlets and the JSP, implement the functionality offered in a specific task.
-In the development of JSP use custom tags
-When designing business logic should use filters and sessions.
-The application must support the work with the cyrillic alphabet, including at storing information in the database.
-Classes and methods should have names reflecting their functionality and they must be properly structured in package.
-Making the code must comply with Java Code Convention.
-In the development of use of logging system (Log4j).
-Code should contain comments, at least partially.
+# Features
+
+- Login/registration
+- Two roles: user, administrator
+- Add / Accept / Decline Application
+- Editing personal info
+- Localization (RU, EN)
+
+# Technologies
+
+- Servlet
+- JSP
+- JDBC
+- MySQL
+- Maven
+
+# Build & Run
+
+## Requirements
+
+- Maven
+
+## Database
+
+If it doesn't work you should try modify ```resources/database.properties```
+SQL schema an template example in ```resources/sql```
+
+## Tomcat
+
