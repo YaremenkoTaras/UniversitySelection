@@ -1,92 +1,44 @@
 package com.epam.autum.selection.database.connection;
 
+import com.epam.autum.selection.database.DatabaseProperties;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Optional;
-import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Taras
- * Thread safe connection pool.
- */
 public class ConnectionPool {
     private static Logger log = LogManager.getLogger(ConnectionPool.class);
-    private BlockingQueue<WrapperConnection> connections;
+
     private static ReentrantLock lock = new ReentrantLock();
-
-    private static final String RESOURCE = "database";
-    private static final String DRIVER = "driver";
-    private static final String URL = "url";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
-    private static final String AUTORECONNECT = "autoReconnect";
-    private static final String CHARENCODING = "characterEncoding";
-    private static final String USEUNICODE = "useUnicode";
-    private static final String POOLSIZE = "poolsize";
-    private static final String USESSL = "useSSL";
-
-    private Properties properties;
-    private String url;
-
-    /**
-     * Nested class for lazy pool initialization.
-     */
-    private static class PoolHolder {
-        private static ConnectionPool pool;
-        private static AtomicBoolean init = new AtomicBoolean(false);
-
-        static {
-            try {
-                lock.lock();
-                if (!init.get()) {
-                    pool = new ConnectionPool();
-                    init.set(true);
-                }
-            } finally {
-                lock.unlock();
-            }
-        }
-    }
+    private BlockingQueue<WrapperConnection> connections;
 
     private ConnectionPool() {
 
-        ResourceBundle resource = ResourceBundle.getBundle(RESOURCE);
-        url = resource.getString(URL);
-        String driver = resource.getString(DRIVER);
-        String user = resource.getString(USER);
-        String pass = resource.getString(PASSWORD);
-        String autoReconnect = resource.getString(AUTORECONNECT);
-        String charEncoding = resource.getString(CHARENCODING);
-        String useUnicode = resource.getString(USEUNICODE);
-        String useSSL = resource.getString(USESSL);
-        int poolSize = Integer.parseInt(resource.getString(POOLSIZE));
+        DatabaseProperties properties = DatabaseProperties.getInstance();
 
         try {
-            Class.forName(driver);
-        }  catch (ClassNotFoundException e) {
-            log.error("Can`t register the driver.");
+            Class.forName(properties.getDriver());
+        } catch (ClassNotFoundException e) {
+            log.log(Level.FATAL, "Register Driver error:", e);
         }
 
-        properties = new Properties();
-        properties.put(USER, user);
-        properties.put(PASSWORD, pass);
-        properties.put(AUTORECONNECT, autoReconnect);
-        properties.put(CHARENCODING, charEncoding);
-        properties.put(USEUNICODE, useUnicode);
-        properties.put(USESSL, useSSL);
+        int poolSize = properties.getPoolSize();
 
         connections = new ArrayBlockingQueue<>(poolSize);
         for (int i = 0; i < poolSize; i++) {
-            connections.add(new WrapperConnection(properties, url));
+            connections.add(new WrapperConnection(properties.getProperties(), properties.getURL()));
         }
+        log.log(Level.DEBUG, "Connection pool initialized. Pool size = " + poolSize);
+
     }
 
     public static ConnectionPool getInstance() {
@@ -100,16 +52,24 @@ public class ConnectionPool {
         WrapperConnection connection = null;
         try {
             connection = connections.poll(5, TimeUnit.SECONDS);
-            log.debug("Connection taken.");
+            if (connection != null) {
+                log.log(Level.DEBUG, "Connection taken. Pool size = " + connections.size());
+            } else {
+                log.log(Level.DEBUG, "Connection not taken. Pool size = " + connections.size());
+            }
         } catch (InterruptedException e) {
-            log.error(e);
+            log.log(Level.ERROR, e);
         }
         return Optional.ofNullable(connection);
     }
 
     public boolean returnConnection(WrapperConnection connection) {
-        log.debug("Connection returned.");
-        return connections.add(connection);
+        boolean isReturned = false;
+        isReturned = connections.add(connection);
+        if (isReturned) {
+            log.log(Level.DEBUG, "Connection returned. Pool size = " + connections.size());
+        }
+        return isReturned;
     }
 
     public void closePool() {
@@ -118,16 +78,36 @@ public class ConnectionPool {
             connection.closeConnection();
         }
 
-        /*Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
+        Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
-            Driver driver = (com.mysql.jdbc.Driver) drivers.nextElement();
+            java.sql.Driver driver = drivers.nextElement();
             try {
                 DriverManager.deregisterDriver(driver);
-                log.debug("Driver deregistered.", driver);
+                log.log(Level.DEBUG, "Driver deregistered.", driver);
             } catch (SQLException e) {
-                log.error("Error while deregistering driver.", e);
+                log.log(Level.ERROR, "Error while deregistering driver.", e);
             }
-        }*/
-        log.debug("Pool closed.");
+        }
+        log.log(Level.DEBUG, "Connection pool closed.");
+    }
+
+    /**
+     * Nested class for lazy pool initialization.
+     */
+    private static class PoolHolder {
+        private static ConnectionPool pool;
+        private static AtomicBoolean init = new AtomicBoolean(false);
+
+        static {
+            lock.lock();
+            try {
+                if (!init.get()) {
+                    pool = new ConnectionPool();
+                    init.set(true);
+                }
+            } finally {
+                lock.unlock();
+            }
+        }
     }
 }
