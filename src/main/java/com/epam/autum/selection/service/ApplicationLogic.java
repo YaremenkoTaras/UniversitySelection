@@ -1,14 +1,14 @@
 package com.epam.autum.selection.service;
 
-import com.epam.autum.selection.database.connection.ConnectionPool;
-import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
-import com.epam.autum.selection.database.dao.interfaces.*;
-import com.epam.autum.selection.database.dto.ApplicantMarkDTO;
-import com.epam.autum.selection.database.dto.ApplicationDTO;
-import com.epam.autum.selection.database.dto.FacultySubjectDTO;
-import com.epam.autum.selection.database.entity.Application;
-import com.epam.autum.selection.database.entity.*;
+import com.epam.autum.selection.jdbc.connection.ConnectionPool;
+import com.epam.autum.selection.jdbc.connection.WrapperConnection;
+import com.epam.autum.selection.jdbc.dao.daofactory.DaoFactory;
+import com.epam.autum.selection.jdbc.dao.interfaces.*;
+import com.epam.autum.selection.jdbc.dto.ApplicantMarkDTO;
+import com.epam.autum.selection.jdbc.dto.ApplicationDTO;
+import com.epam.autum.selection.jdbc.dto.FacultySubjectDTO;
+import com.epam.autum.selection.jdbc.entity.Application;
+import com.epam.autum.selection.jdbc.entity.*;
 import com.epam.autum.selection.exception.DAOException;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.util.DateConverter;

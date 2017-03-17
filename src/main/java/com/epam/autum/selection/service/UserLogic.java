@@ -1,10 +1,10 @@
 package com.epam.autum.selection.service;
 
-import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
-import com.epam.autum.selection.database.dao.interfaces.IUserDAO;
-import com.epam.autum.selection.database.connection.ConnectionPool;
-import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.entity.User;
+import com.epam.autum.selection.jdbc.dao.daofactory.DaoFactory;
+import com.epam.autum.selection.jdbc.dao.interfaces.IUserDAO;
+import com.epam.autum.selection.jdbc.connection.ConnectionPool;
+import com.epam.autum.selection.jdbc.connection.WrapperConnection;
+import com.epam.autum.selection.jdbc.entity.User;
 import com.epam.autum.selection.exception.DAOException;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.util.ValidationResult;

@@ -1,7 +1,7 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.entity.Application;
-import com.epam.autum.selection.database.entity.User;
+import com.epam.autum.selection.jdbc.entity.Application;
+import com.epam.autum.selection.jdbc.entity.User;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.service.ApplicationLogic;
 import com.epam.autum.selection.service.PageConfigurator;

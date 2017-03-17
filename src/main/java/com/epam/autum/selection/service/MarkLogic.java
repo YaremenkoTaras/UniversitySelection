@@ -1,15 +1,15 @@
 package com.epam.autum.selection.service;
 
-import com.epam.autum.selection.database.connection.ConnectionPool;
-import com.epam.autum.selection.database.connection.WrapperConnection;
-import com.epam.autum.selection.database.dao.daofactory.DaoFactory;
-import com.epam.autum.selection.database.dao.interfaces.IApplicantMarkDAO;
-import com.epam.autum.selection.database.dao.interfaces.ISubjectDAO;
-import com.epam.autum.selection.database.dao.interfaces.IUserDAO;
-import com.epam.autum.selection.database.dto.ApplicantMarkDTO;
-import com.epam.autum.selection.database.entity.ApplicantMark;
-import com.epam.autum.selection.database.entity.Subject;
-import com.epam.autum.selection.database.entity.User;
+import com.epam.autum.selection.jdbc.connection.ConnectionPool;
+import com.epam.autum.selection.jdbc.connection.WrapperConnection;
+import com.epam.autum.selection.jdbc.dao.daofactory.DaoFactory;
+import com.epam.autum.selection.jdbc.dao.interfaces.IApplicantMarkDAO;
+import com.epam.autum.selection.jdbc.dao.interfaces.ISubjectDAO;
+import com.epam.autum.selection.jdbc.dao.interfaces.IUserDAO;
+import com.epam.autum.selection.jdbc.dto.ApplicantMarkDTO;
+import com.epam.autum.selection.jdbc.entity.ApplicantMark;
+import com.epam.autum.selection.jdbc.entity.Subject;
+import com.epam.autum.selection.jdbc.entity.User;
 import com.epam.autum.selection.exception.DAOException;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.util.ValidationResult;

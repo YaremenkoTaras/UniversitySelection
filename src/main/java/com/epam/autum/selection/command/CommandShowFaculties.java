@@ -1,6 +1,6 @@
 package com.epam.autum.selection.command;
 
-import com.epam.autum.selection.database.entity.Faculty;
+import com.epam.autum.selection.jdbc.entity.Faculty;
 import com.epam.autum.selection.exception.LogicException;
 import com.epam.autum.selection.service.FacultyLogic;
 import com.epam.autum.selection.service.PageConfigurator;
