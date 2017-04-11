@@ -1,6 +1,6 @@
 # Application
 
-A simple Web Service for a University Slection
+A simple Web Service for a University Selection
 
 # Description
 
@@ -26,12 +26,14 @@ Administrator can watch information about Applicant and Accept or Decline the Ap
 - JDBC
 - MySQL
 - Maven
+- Log4j
 
 # Build & Run
 
 ## Requirements
 
 - Maven
+- MySQL Server
 
 ## Database
 
