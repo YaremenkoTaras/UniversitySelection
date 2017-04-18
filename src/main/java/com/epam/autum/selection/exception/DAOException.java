@@ -1,10 +1,7 @@
 package com.epam.autum.selection.exception;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Irina
- * Date: 14.04.16
- * Time: 3:54
+ * 
  * Exception thrown on the DAO layer.
  */
 public class DAOException extends Exception {

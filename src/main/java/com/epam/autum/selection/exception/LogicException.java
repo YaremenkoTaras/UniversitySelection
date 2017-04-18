@@ -1,10 +1,7 @@
 package com.epam.autum.selection.exception;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Irina
- * Date: 14.04.16
- * Time: 4:12
+ *
  * Exception thrown on the Logic layer.
  */
 public class LogicException extends Exception {
