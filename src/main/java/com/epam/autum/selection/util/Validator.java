@@ -3,12 +3,6 @@ package com.epam.autum.selection.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Irina
- * Date: 11.04.16
- * Time: 5:08
- */
 public class Validator {
 
     /**
